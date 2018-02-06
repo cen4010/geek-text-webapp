@@ -32,7 +32,7 @@ To install the Python dependencies for this project, run:
 
 The following requires that a virtual environment be created and set up for
 the project. To do so, refer to the
-[Pip & Python VirualEnv](#pip--python-virtualenv) instructions in this repo.
+[Pip & Python VirualEnv](#pip--python-virtualenv) instructions in this README.
 
 The get the current state of the project running for development work, the
 following must be done:
