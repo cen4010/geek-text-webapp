@@ -11,5 +11,5 @@ install:
 
 # command to run tests
 script:
-  - pytest 
+  - python manage.py test
 
