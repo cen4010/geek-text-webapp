@@ -4,12 +4,12 @@ python:
   - "3.6"
 
 env:
-- DJANGO_VERSION=1.11
+  - DJANGO_VERSION=1.11
 
 install:
   - pip install -r requirements.txt
 
 # command to run tests
-#script:
-#  - python webapp/manage.py test
+script:
+  - python webapp/manage.py test
 
