@@ -10,4 +10,4 @@ def details(request, book_id):
     except Book.DoesNotExist:
         pass
 
-    return render(request, 'book_details/details.html', { 'book': book })
+    return render(request, 'book_details/details.html', {'book': book})
