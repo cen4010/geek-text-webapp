@@ -53,7 +53,13 @@ class Publisher(models.Model):
         'Publisher home webpage',
         blank=True)
 
+    def __str__(self):
+        return '{}'.format(self.name)
+
 class Genre(models.Model):
     name = models.CharField(
         'Short name for genre',
         max_length=16)
+
+    def __str__(self):
+        return '{}'.format(self.name)
