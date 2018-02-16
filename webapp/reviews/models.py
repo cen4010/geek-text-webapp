@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 class Review(models.Model):
@@ -14,13 +15,7 @@ class Review(models.Model):
         'Rating',
         null=True,
         blank=True,
-        choices=[
-            (1, '1'),
-            (2, '2'),
-            (3, '3'),
-            (4, '4'),
-            (5, '5')
-        ])
+        validators=[MinValueValidator(1), MaxValueValidator(5)])
     comment = models.TextField(
         'Comment',
         max_length=500,
