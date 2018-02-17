@@ -1,0 +1,29 @@
+{% extends 'geek_text/base.html' %}
+
+{% block content %}
+	<p>This page displays the reviews for a book!</p>
+
+	{% if book %}
+		<p>These are the reviews for "{{ book.title }}":</p>
+
+		{% for review in reviews %}
+			<table>
+				<tr>
+					<td>User:</td>
+					<td>
+						{% if review.anonymous %}
+							Anonymous
+						{% else %}
+							{{ review.user }}
+						{% endif %}
+					</td>
+				</tr>
+				<tr><td>Rating:</td><td>{{ review.rating }}</td></tr>
+				<tr><td>Comment:</td><td>{{ review.comment }}</td></tr>
+			</table>
+			<br>
+		{% endfor %}
+	{% else %}
+		<p>This book does not exist!</p>
+	{% endif %}
+{% endblock content %}
