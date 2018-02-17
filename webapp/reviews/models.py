@@ -10,14 +10,14 @@ class Review(models.Model):
         settings.AUTH_USER_MODEL,
         related_name='reviews')
     anonymous = models.BooleanField(
-        'Anonymous')
+        'Whether or not the comment was posted anonymously')
     rating = models.IntegerField(
-        'Rating',
+        'Rating associated with user comment; implies a review of the Book',
         null=True,
         blank=True,
         validators=[MinValueValidator(1), MaxValueValidator(5)])
     comment = models.TextField(
-        'Comment',
+        'User submitted comment on the associated Book',
         max_length=500,
         blank=True)
 
