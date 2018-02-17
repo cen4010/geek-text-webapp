@@ -1,0 +1,38 @@
+{% extends 'geek_text/base.html' %}
+
+{% block content %}
+  <h1 style="text-align: center;">Browse for Books!</h1>
+  <div class="col-sm-3">
+    <h3> Filter by:</h3>
+        <form method="get">
+          {{ filter.form.as_p }}
+          <button type="submit">Submit</button>
+        </form>
+  </div>
+
+  <div class="col-sm-9">
+    {% for book in filter.qs %}
+        <div class="book" style="padding-top: 30px;">
+          <div class="row">
+            <div class="col-sm-6 title">
+              <h4><a href="">{{ book.title }}</a></h4>
+            </div>
+            <div class="col-sm-6 author">
+              <p>By: {{ book.author }}</p>
+            </div>
+          </div>
+            <div class="row details">
+              <div class='col-sm-3'>
+                <p>{{ book.publisher }}</p>
+              </div>
+              <div class='col-sm-3'>
+                <p>{{ book.publish_date }}</p>
+              </div>
+              <div class='col-sm-3'>
+                <p>{{ book.genre }}</p>
+              </div>
+            </div>
+        </div>
+    {% endfor %}
+  </div>
+{% endblock %}
