@@ -1,0 +1,243 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cart Template</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap and Font Awesome css-->
+    <!-- we use cdn but you can also include local files located in css directory-->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Google fonts - Montserrat for headings, Raleway for copy-->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:400,700">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="/static/css/theme.css" id="theme-stylesheet">
+</head>
+
+<body class="vsc-initialized" style="">
+    <div class="container">
+        <div class="col-md-12">
+            <div class="row page-top">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <br><br>
+                    <h1>Shopping cart</h1>
+                    <p class="text-muted">You currently have 4 item(s) in your cart.</p>
+                </div>
+            </div>
+        </div>
+        <div id="basket" class="col-md-9">
+            <div class="box">
+                <form method="post" action="checkout1.html">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Product</th>
+                                    <th>Quantity</th>
+                                    <th>Unit price</th>
+                                    <th colspan="2">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <a href="detail.html">
+                                   <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/The_Martian_2014.jpg/220px-The_Martian_2014.jpg" alt="White Blouse Armani">
+                                 </a>
+                                    </td>
+                                    <td>
+                                        <a href="detail.html">The Martian</a>
+                                    </td>
+                                    <td>
+                                        <input type="number" value="2" class="form-control">
+                                    </td>
+                                    <td>$12.00</td>
+                                    <td>$24.00</td>
+                                    <td>
+                                        <a href="#">
+                                 <i class="fa fa-trash-o"></i>
+                                 </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="detail.html">
+                               
+<img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f7/TheGreatGatsby_1925jacket.jpeg/220px-TheGreatGatsby_1925jacket.jpeg" alt="White Blouse Armani">                                 </a>
+                                    </td>
+                                    <td>
+                                        <a href="detail.html">The Great Gatsby
+                                 </a>
+                                    </td>
+                                    <td>
+                                        <input type="number" value="2" class="form-control">
+                                    </td>
+                                    <td>$13.00</td>
+                                    <td>$26.00</td>
+                                    <td>
+                                        <a href="#">
+                                 <i class="fa fa-trash-o"></i>
+                                 </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-footer">
+                        <div class="pull-left">
+                            <a href="category.html" class="btn btn-default">
+                        <i class="fa fa-chevron-left"></i> Continue shopping</a>
+                        </div>
+                        <div class="pull-right">
+                            <button class="btn btn-default">
+                        <i class="fa fa-refresh"></i> Update cart</button>
+                            <button type="submit" class="btn btn-primary">Proceed to checkout
+                        <i class="fa fa-chevron-right"></i>
+                        </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div id="order-summary" class="box">
+                <div class="box-header">
+                    <h3>Order summary</h3>
+                </div>
+                <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered.</p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Order subtotal</td>
+                                <th>$50.00</th>
+                            </tr>
+                            <tr>
+                                <td>Shipping and handling</td>
+                                <th>$10.00</th>
+                            </tr>
+                            <tr>
+                                <td>Tax</td>
+                                <th>$0.00</th>
+                            </tr>
+                            <tr class="total">
+                                <td>Total</td>
+                                <th>$60.00</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- quick view modal box-->
+        <div id="product-quick-view-modal" tabindex="-1" role="dialog" aria-hidden="false" class="modal fade">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                        <div class="row quick-view product-main">
+                            <div class="col-sm-6">
+                                <div class="quick-view-main-image">
+                                    <img src="img/detailbig1.jpg" alt="" class="img-responsive">
+                                </div>
+                                <div class="ribbon ribbon-quick-view sale">
+                                    <div class="theribbon">SALE</div>
+                                    <div class="ribbon-background"></div>
+                                </div>
+                                <!-- /.ribbon-->
+                                <div class="ribbon ribbon-quick-view new">
+                                    <div class="theribbon">NEW</div>
+                                    <div class="ribbon-background"></div>
+                                </div>
+                                <!-- /.ribbon-->
+                                <div class="row thumbs">
+                                    <div class="col-xs-4">
+                                        <a href="img/detailbig1.jpg" class="thumb active">
+                                 <img src="img/detailsmall1.jpg" alt="" class="img-responsive">
+                                 </a>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <a href="img/detailbig2.jpg" class="thumb">
+                                 <img src="img/detailsmall2.jpg" alt="" class="img-responsive">
+                                 </a>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <a href="img/detailbig3.jpg" class="thumb">
+                                 <img src="img/detailsmall3.jpg" alt="" class="img-responsive">
+                                 </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <h2 class="product__heading">Burton Jacky Shirt</h2>
+                                <p class="text-muted text-small text-center">A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut...
+                                </p>
+                                <div class="box">
+                                    <form>
+                                        <p class="price">$124.00</p>
+                                        <div class="row">
+                                            <div class="col-md-6 col-md-offset-3">
+                                                <div class="form-group">
+                                                    <label for="modal_size">Choose your size</label>
+                                                    <select id="modal_size" class="form-control">
+                                             <option>Small</option>
+                                             <option>Medium</option>
+                                          </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="modal_quantity">Quantity</label>
+                                                    <input type="number" value="1" id="modal_quantity" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-center">
+                                            <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-shopping-cart"></i>&nbsp;Add to cart</button>
+                                            <button type="submit" data-toggle="tooltip" data-placement="top" title="" class="btn btn-default" data-original-title="Add to wishlist">
+                                    <i class="fa fa-heart-o"></i>
+                                    </button>
+                                        </p>
+                                    </form>
+                                </div>
+                                <!-- /.box-->
+                                <div class="quick-view-social">
+                                    <h4>Show it to your friends</h4>
+                                    <p>
+                                        <a href="#" data-animate-hover="pulse" class="external facebook">
+                                 <i class="fa fa-facebook"></i>
+                                 </a>
+                                        <a href="#" data-animate-hover="pulse" class="external gplus">
+                                 <i class="fa fa-google-plus"></i>
+                                 </a>
+                                        <a href="#" data-animate-hover="pulse" class="external twitter">
+                                 <i class="fa fa-twitter"></i>
+                                 </a>
+                                        <a href="#" data-animate-hover="pulse" class="email">
+                                 <i class="fa fa-envelope"></i>
+                                 </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-dialog-->
+        </div>
+        <!-- /.modal-->
+        <!-- /quick view modal box-->
+    </div>
+    <footer class="footer">
+    </footer>
+    <!-- Javascript files-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')
+    </script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+
+</body></html>

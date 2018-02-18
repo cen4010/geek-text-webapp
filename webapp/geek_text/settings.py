@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'book_details',
     'reviews',
     'geek_text',
+
+
+    'carts'
 ]
 
 MIDDLEWARE = [
