@@ -9,7 +9,6 @@ env:
 install:
   - pip install -r requirements.txt
 
-# command to run tests
-script:
-  - python webapp/manage.py test
+cript:
+  - ./ci/pipeline-checks.sh
 
