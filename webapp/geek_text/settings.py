@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'book_details',
     'accounts',
+    'reviews',
+    'geek_text',
+    'browse',
 ]
 
 MIDDLEWARE = [

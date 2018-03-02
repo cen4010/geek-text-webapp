@@ -1,0 +1,19 @@
+{% extends 'geek_text/base.html' %}
+
+{% block content %}
+<p>This page displays all major details of a book!</p>
+
+{% if book %}
+<p>These are the details about "{{ book.title }}":</p>
+<table>
+	<tr><td>Author<td><td>{{ book.author }}</td></tr>
+	<tr><td>Description<td><td>{{ book.description }}</td></tr>
+	<tr><td>Genre<td><td>{{ book.genre }}</td></tr>
+	<tr><td>Publisher<td><td>{{ book.publisher }}</td></tr>
+	<tr><td>Publish Date<td><td>{{ book.publish_date }}</td></tr>
+</table>
+{% else %}
+<p>This book does not exist!</p>
+{% endif %}
+{% endblock content %}
+

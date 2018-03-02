@@ -21,6 +21,9 @@ urlpatterns = [
     url(r'^$', login_redirect , name='login_redirect'),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('accounts.urls')),
+    url(r'^browse/', include('browse.urls', namespace='browse')),
+    url(r'^books/', include('book_details.urls', namespace='books')),
+    url(r'^reviews/', include('reviews.urls', namespace='reviews')),
 ]
 
 
