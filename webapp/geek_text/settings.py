@@ -15,6 +15,12 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# CI Hooks
+USER = os.environ.get('USER', os.environ.get('USERNAME', 'ANON-DEV'))
+CI_ENV = os.environ.get('CI_COMMIT', USER)
+if os.environ.get('CI', 'false') == 'true' and os.environ.get('TRAVIS_BRANCH', 'nil') == 'master':
+    CI_ENV = 'geek-text'
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -127,9 +133,9 @@ MEDIA_URL = '/media/'
 
 # Storage
 STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-STATICFILES_LOCATION = 'static/geek-text'
+STATICFILES_LOCATION = 'static/%s' % CI_ENV
 DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
-MEDIAFILES_LOCATION = 'media/geek-text'
+MEDIAFILES_LOCATION = 'media/%s' % CI_ENV
 
 # AWS Auth
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_ID', 'MISSING AWS ACCESS ID')
