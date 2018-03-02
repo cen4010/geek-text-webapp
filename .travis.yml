@@ -9,6 +9,6 @@ env:
 install:
   - pip install -r requirements.txt
 
-cript:
+script:
   - ./ci/pipeline-checks.sh
 
