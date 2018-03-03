@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'book_details',
     'browse',
     'reviews',
-    'reviews',
     'geek_text',
 ]
 
