@@ -2,12 +2,15 @@ from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
+# Using direct User model due to issues with Seeder
+from django.contrib.auth.models import User
+
 class Review(models.Model):
     book = models.ForeignKey(
         'book_details.Book',
         related_name='reviews')
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        User,
         related_name='reviews')
     anonymous = models.BooleanField(
         'Whether or not the comment was posted anonymously')
