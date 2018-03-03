@@ -15,6 +15,14 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# CI Hooks
+USER = os.environ.get('USER', os.environ.get('USERNAME', 'ANON-DEV'))
+CI_ENV = 'dev/' + USER
+if os.environ.get('CI', 'false') == 'true':
+    CI_ENV = 'ci/' + os.environ.get('CI_COMMIT', 'HASHLESS')
+    if os.environ.get('TRAVIS_BRANCH', 'nil') == 'master':
+        CI_ENV = 'geek-text'
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -37,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'book_details',
     'reviews',
     'geek_text',
@@ -122,3 +131,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+# Storage
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+STATICFILES_LOCATION = 'static/%s' % CI_ENV
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+MEDIAFILES_LOCATION = 'media/%s' % CI_ENV
+
+# AWS Auth
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_ID', 'MISSING AWS ACCESS ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_KEY', 'MISSING AWS SECRET KEY')
+
+# AWS S3 Config
+AWS_S3_REGION_NAME = 'us-east-1'
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_S3_BUCKET', 'MISSING AWS S3 BUCKET')
+AWS_S3_OBJECT_PARAMETERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000',
+}
+## AWS Bucket URL
+AWS_S3_CUSTOM_DOMAIN = 's3.amazonaws.com/%s' % AWS_STORAGE_BUCKET_NAME
