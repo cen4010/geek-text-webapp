@@ -1,17 +1,27 @@
 {% extends 'geek_text/base.html' %}
 
 {% block content %}
+  <div class="row" style="margin: 5px 10px 5px 10px;">
   <h1 style="text-align: center;">Browse for Books!</h1>
   <div class="col-sm-3">
     <h3> Filter by:</h3>
         <form method="get">
           {{ filter.form.as_p }}
+          {% csrf_token %}
+          <label for="id_per_page" >Results Per Page:</label>
+          <select name="p">
+              <option value="10">10</option>
+              <option value="20">20</option>
+          </select></br>
           <button type="submit">Submit</button>
+        </form>
+        <form action="">
+            <input type="submit" value="Reset Filter" style="margin-top: 10px;"/>
         </form>
   </div>
 
   <div class="col-sm-9">
-    {% for book in filter.qs %}
+    {% for book in books%}
         <div class="book" style="padding-top: 30px;">
           <div class="row">
             <div class="col-sm-6 title">
@@ -35,4 +45,28 @@
         </div>
     {% endfor %}
   </div>
+  </div>
+  {% if books.has_other_pages %}
+  <div id="pages" style="text-align: center;">
+  <ul class="pagination" style="padding-top: 15px;">
+    {% if books.has_previous %}
+      <li><a href="?page={{ books.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in books.paginator.page_range %}
+      {% if books.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if books.has_next %}
+      <li><a href="?page={{ books.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+</div>
+  {% endif %}
 {% endblock %}
