@@ -17,9 +17,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # CI Hooks
 USER = os.environ.get('USER', os.environ.get('USERNAME', 'ANON-DEV'))
-CI_ENV = os.environ.get('CI_COMMIT', USER)
-if os.environ.get('CI', 'false') == 'true' and os.environ.get('TRAVIS_BRANCH', 'nil') == 'master':
-    CI_ENV = 'geek-text'
+CI_ENV = 'dev/' + USER
+if os.environ.get('CI', 'false') == 'true':
+    CI_ENV = 'ci/' + os.environ.get('CI_COMMIT', 'HASHLESS')
+    if os.environ.get('TRAVIS_BRANCH', 'nil') == 'master':
+        CI_ENV = 'geek-text'
 
 
 # Quick-start development settings - unsuitable for production
@@ -142,7 +144,6 @@ AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_ID', 'MISSING AWS ACCESS ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_KEY', 'MISSING AWS SECRET KEY')
 
 # AWS S3 Config
-
 AWS_S3_REGION_NAME = 'us-east-1'
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_S3_BUCKET', 'MISSING AWS S3 BUCKET')
 AWS_S3_OBJECT_PARAMETERS = {
@@ -151,4 +152,3 @@ AWS_S3_OBJECT_PARAMETERS = {
 }
 ## AWS Bucket URL
 AWS_S3_CUSTOM_DOMAIN = 's3.amazonaws.com/%s' % AWS_STORAGE_BUCKET_NAME
-
