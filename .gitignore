@@ -92,3 +92,5 @@ celerybeat-schedule.*
 .venv
 env/
 
+.idea/
+
