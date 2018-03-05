@@ -25,6 +25,10 @@ class Book(models.Model):
         on_delete=models.SET_NULL)
     publish_date = models.DateField(
         'Date publisher initially released current book version')
+    cover = models.ImageField(
+        'Front cover of book',
+        upload_to = 'book_covers/',
+        null=True)
 
     def __str__(self):
         return '{} -- {}'.format(self.author, self.title)
