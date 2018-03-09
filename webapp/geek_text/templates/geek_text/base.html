@@ -19,27 +19,39 @@
 
 		<nav class="navbar navbar-inverse" style="background-image: -webkit-linear-gradient(top,#2d943a 0,#158223 100%);
 		    border-color: #2d943a;">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		      <a class="navbar-brand" href="" style="color: #fff;">Geek Text</a>
-		    </div>
-		    <ul class="nav navbar-nav" >
-		      <li class="active" ><a href="/browse" style="background-image: linear-gradient(to bottom,#26632e 0,#26632e 100%);">Browse</a></li>
-		    </ul>
-		    <ul class="nav navbar-nav navbar-right">
-		      <li><a href="#"><span class="glyphicon glyphicon-user"></span>Account</a></li>
-		      {% if user.is_authenticated %}
-		      <li class="nav-item">
-		        <a class="nav-link" href="{% url 'logout' %}">Log out</a>
-              </li>
-              {% else %}
-              <li class="nav-item">
-		        <a class="nav-link" href="{% url 'login' %}">Log in</a>
-              </li>
-              {% endif %}
-		      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>Cart</a></li>
-		    </ul>
-		  </div>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="" style="color: #fff;">Geek Text</a>
+                </div>
+                <ul class="nav navbar-nav" >
+                    <li class="active" ><a href="/browse" style="background-image: linear-gradient(to bottom,#26632e 0,#26632e 100%);">Browse</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Account
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Log in</a>
+                        </li>
+                    {% endif %}
+
+                  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>Cart</a></li>
+                </ul>
+            </div>
 		</nav>
 
 		{% block head %}
