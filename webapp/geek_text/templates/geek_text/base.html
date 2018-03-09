@@ -28,6 +28,15 @@
 		    </ul>
 		    <ul class="nav navbar-nav navbar-right">
 		      <li><a href="#"><span class="glyphicon glyphicon-user"></span>Account</a></li>
+		      {% if user.is_authenticated %}
+		      <li class="nav-item">
+		        <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+		        <a class="nav-link" href="{% url 'login' %}">Log in</a>
+              </li>
+              {% endif %}
 		      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>Cart</a></li>
 		    </ul>
 		  </div>
