@@ -101,9 +101,21 @@ python manage.py runserver
 By this point, you should have a test server up and running to start making
 changes and iterating on your implementation.
 
-### Running Specs
+### Linting
 
-[To-Do]
+The repo is setup so that when installing requirements, the
+[Pylint](https://www.pylint.org/) tool is installed. This enables
+linting for the project. The linter runs automatically within our CI
+pipeline on opened Pull Requests. To run it locally, run the following
+from the root of the repo:
+
+```bash
+pylint {module_name}
+```
+
+Where `module_name` is a path to the directory containing the module to
+lint. The `pylintrc` file in the root of repo contains some
+configurations that are useful defaults for the project.
 
 ## Repo Layout
 
