@@ -60,6 +60,23 @@ export AWS_SECRET_KEY={secret-key-here}
 export AWS_S3_BUCKET=geek-text-resources
 ```
 
+### Seed Database
+
+During local testing, it may be useful to have a good amount of data to
+manipulate. Towards this goal, we've added utility commands within the
+`manage.py`:
+
+- `seed_db` - Add randomly-generated entities to DB
+- `clear_db` - Wipe all entities from the local DB
+
+These can be invoked by calling them as arguments to `manage.py`, for
+example:
+
+```bash
+> pwd # geek-text-webapp/webapp
+> python manage.py seed_db
+```
+
 ### Running Project
 
 The following requires that a virtual environment be created and set up for
