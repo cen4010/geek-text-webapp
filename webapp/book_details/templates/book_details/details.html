@@ -12,6 +12,10 @@
 	<tr><td>Publisher<td><td>{{ book.publisher }}</td></tr>
 	<tr><td>Publish Date<td><td>{{ book.publish_date }}</td></tr>
 </table>
+
+<p>Cover:</p>
+<img src="{{ book.cover.url }}"/>
+
 {% else %}
 <p>This book does not exist!</p>
 {% endif %}
