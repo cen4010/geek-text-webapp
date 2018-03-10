@@ -9,10 +9,14 @@
 - Python - 3.6
 - VirtualEnv - 15.1.0
 
-#### Packages
+#### Main Packages
 
+- pylint - 1.8.2
 - Django - 1.11
-- Pytz - 2017.3
+- django-seed - 0.1.8
+- django-filter - 1.1.0
+- boto3 - 1.6.3
+- Pillow - 5.0.0
 
 ### Pip & Python VirtualEnv
 
@@ -27,6 +31,34 @@ and then to activate the venv:
 To install the Python dependencies for this project, run:
 
 `pip install -r requirements.txt`
+
+### AWS Access
+
+To host static and media files, an AWS bucket have been set up for use.
+Credentials have been generated for memebers and the pipeline to push
+files, the following environment variables are involved in this
+configuration:
+
+| Variable | Description |
+| --- | --- |
+| `DJANGO_BACKEND` | Which storage to use -- `amazon` or `local` |
+| `AWS_ACCESS_ID` | ID of AWS user account |
+| `AWS_SECRET_ACCESS_KEY` | Secret key for AWS account |
+| `AWS_S3_BUCKET` | Name of bucket to use -- `geek-text-resources` |
+
+The values to use for these variables can be obtained by asking Dan.
+
+It is recommended to create a script to `source` that exports all these
+variables. This can be done with a script like the following:
+
+```bash
+export DJANGO_BACKEND=amazon
+
+export AWS_ACCESS_ID={access-key-here}
+export AWS_SECRET_KEY={secret-key-here}
+
+export AWS_S3_BUCKET=geek-text-resources
+```
 
 ### Running Project
 
