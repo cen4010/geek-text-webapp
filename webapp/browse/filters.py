@@ -16,4 +16,4 @@ class bookFilter(django_filters.FilterSet):
 
     class Meta:
         model = Book
-        fields = ['author', 'genre', ]
+        fields = ['title', 'author', 'genre', ]

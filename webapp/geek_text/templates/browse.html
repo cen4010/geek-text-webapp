@@ -1,26 +1,117 @@
 {% extends 'geek_text/base.html' %}
 
 {% block content %}
-  <div class="row" style="margin: 5px 10px 5px 10px;">
-  <h1 style="text-align: center;">Browse for Books!</h1>
-  <div class="col-sm-3">
-    <h3> Filter by:</h3>
-        <form method="get">
-          {{ filter.form.as_p }}
-          {% csrf_token %}
-          <label for="id_per_page" >Results Per Page:</label>
-          <select name="p">
-              <option value="10">10</option>
-              <option value="20">20</option>
-          </select></br>
-          <button type="submit">Submit</button>
-        </form>
-        <form action="">
-            <input type="submit" value="Reset Filter" style="margin-top: 10px;"/>
-        </form>
-  </div>
+<style>
+.fil-item {
+margin-bottom: 8px;
+}
+.btn-secondary{
+  padding: 4px; background-image:
+  linear-gradient(to bottom,#fff 0, #ececec 100%);
+  color: #26632e;
+  border-color: #26632e;
+  width: 55%;
+  height: 42%;
+  margin: 3px;
+}
+#filterby:hover{
+  background-color: #c7c7c7;
+}
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: #258e32;
+    border-color: #258e32;
+}
+.pagination>li>a, .pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #258e32;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+@media(min-width: 769px){
+  .fil-item {
+      width: 16%;
+      margin: 0;
+      display: inline-block;
+      padding-right: 15px;
+  }
+}
+@media(max-width: 769px){
+.btn-secondary{
+  width: 50%;
+}
+}
+</style>
+{% load widget_tweaks %}
+     <nav class="navbar navbar-inverse" style="z-index: 0; height: 100%; background-image: -webkit-linear-gradient(top,#ececec 0,#ececec 100%); border: 0px; border-radius: 0px; margin-bottom: 0px;
+         border-color: #2d943a;">
+       <div class="container-fluid">
+         <div class="navbar-header">
+          <h4 id="filterby" class="navbar-toggle" data-toggle="collapse" data-target="#myFilterbar" style="float: left;
+            padding: 5px 10px;
+            margin-top: 10px;
+            margin-right: 15px;
+            margin-left: 15px;
+            margin-bottom: 5px;
+            border: 0px solid transparent;
+            border-radius: 0px;"> <span class="glyphicon glyphicon-filter"></span> Filter By:</span></h4>
+          </div>
+         <div class="collapse navbar-collapse" id="myFilterbar" style="border-color: #c7c7c7; border-top: solid 1px #c7c7c7;">
+           <ul class="nav filter" style="margin: 10px 15px 5px;">
+            <form method="get">
+             <li class="fil-item">
+                 {{ filter.form.genre.label_tag }}
+                 {% render_field filter.form.genre class="form-control" %}
+             </li>
+             <li class="fil-item">
+                  {{ filter.form.author.label_tag }}
+                  {% render_field filter.form.author class="form-control" %}
+              </li>
+              <li class="fil-item">
+                    <p>For Ratings</p>
+                   {{ filter.form.rating.label_tag }}
+                   {% render_field filter.form.rating class="form-control" %}
+              </li>
+              <li class="fil-item">
+                    {{ filter.form.o.label_tag }}
+                    {% render_field filter.form.o class="form-control" %}
+              </li>
+              <li class="fil-item">
+                   <div class="">
+                     {% csrf_token %}
+                     <label for="id_per_page" >Results Per Page:</label></br>
+                     <select name="p" class="form-control" >
+                         <option value="10">10</option>
+                         <option value="20">20</option>
+                     </select>
+                   </div>
+                </li>
+                <li class="fil-item">
+                  <div class="">
+                   <button type="submit" class="btn btn-secondary" >
+                   <span class="glyphicon glyphicon-search"></span> Submit
+                   </button>
+                  </form>
+                   <form action="">
+                     <button type="submit" class="btn btn-secondary" >
+                     <span class="glyphicon glyphicon-remove"></span> Reset
+                     </button>
+                   </form>
+                 </div>
+                 </li>
+             </ul>
+         </div>
+       </div>
+     </nav>
 
-  <div class="col-sm-9">
+<div class="row" style="padding: 5px 10px 10px 5px; margin: 0 0 0 0; background-color: #fff; border-top: solid 1px #c7c7c7;">
     {% for book in books%}
         <div class="book" style="padding-top: 30px;">
           <div class="row">
@@ -44,7 +135,6 @@
             </div>
         </div>
     {% endfor %}
-  </div>
   </div>
   {% if books.has_other_pages %}
   <div id="pages" style="text-align: center;">

@@ -21,3 +21,4 @@ s3transfer==0.1.13
 six==1.11.0
 text-unidecode==1.2
 wrapt==1.10.11
+django-widget-tweaks==1.4

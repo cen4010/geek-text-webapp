@@ -11,25 +11,104 @@
 		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 		<style>
 		    body {
-		        padding-bottom: 20px;
+		        padding-bottom: 10px;
 		    }
+				#head-toggle {
+				    background-color: #26632e !important;
+				}
+				.navbar-nav {
+				    margin: 0px 5px !important;
+				}
+				.nav-item:hover{
+				  background-color: #194a20 !important;
+				}
+				.nav-item{
+					height: 55px;
+				}
+				.navbar-collapse {
+    			border-color: #101010;
+					padding: 0;
+				}
+				.btn-primary:hover {
+						background-color: #ececec !important;
+						background-position: 0 -15px;
+						border-color: #2d943a;
+				}
+				.btn-primary {
+						background-color: #ececec !important;
+						background-position: 0 -15px;
+				}
+				#navlinks{
+					margin-top: 5px;
+					color: #fff !important;
+					font-size: 16px;
+				}
+				#searchbarholder{
+					padding: 12px 0;
+					width: 900px;
+				}
+				@media(max-width: 768px)
+				{
+					#myNavbar {
+						border-color: #101010 !important;
+						background-color: #26632e !important;
+						padding: 0;
+					}
+					.navbar-nav {
+							margin: 0px 5px !important;
+							width: 95%;
+					}
+					#searchbarholder{
+						padding: 12px 0;
+						width: 100%;
+					}
+				}
+				@media(min-width: 769px) and (max-width: 1150px)
+				{
+					#searchbarholder{
+						padding: 12px 0;
+						width: 350px;
+					}
+				}
 		</style>
 		<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
 		<link rel="stylesheet" href="{% static 'css/main.css' %}">
-
-		<nav class="navbar navbar-inverse" style="background-image: -webkit-linear-gradient(top,#2d943a 0,#158223 100%);
-		    border-color: #2d943a;">
+				{% load widget_tweaks %}
+		<nav class="navbar navbar-inverse" style=" height: 55px; background-image: -webkit-linear-gradient(top,#2d943a 0,#158223 100%); border: 0px; border-radius: 0px; margin-bottom: 0px;
+		    border-color: #2d943a;   -webkit-box-shadow: 2px 3px 4px 2px #7c7c7c;
+  -moz-box-shadow:    0px 2px 3px 1px #7c7c7c;
+  box-shadow:         0px 2px 3px 1px #7c7c7c; z-index: 1;">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
-		      <a class="navbar-brand" href="" style="color: #fff;">Geek Text</a>
+		      <button id="head-toggle" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style=" border-color: #fff;">
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand" href="/browse" style="color: #fff; padding: 3px 25px 5px 20px;">{% load static %} <img src="{% static "Images/Geek_Text_logo_White.png" %}" alt="Hi!" height="53px" /></a>
 		    </div>
-		    <ul class="nav navbar-nav" >
-		      <li class="active" ><a href="/browse" style="background-image: linear-gradient(to bottom,#26632e 0,#26632e 100%);">Browse</a></li>
-		    </ul>
-		    <ul class="nav navbar-nav navbar-right">
-		      <li><a href="#"><span class="glyphicon glyphicon-user"></span>Account</a></li>
-		      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>Cart</a></li>
-		    </ul>
+        					<ul class="nav navbar-nav">
+					</ul>
+		    <div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+					<li id="searchbarholder">
+						<div class="col-xs-10"  style="padding: 0 5px 5px 10px;">
+						<form method="get">
+							{% render_field filter.form.title class="form-control" %}
+							</div>
+							<div class="col-xs-2"  style="padding: 0 10px 5px 5px;">
+							<button type="submit" class="btn btn-primary" style="background-image: linear-gradient(to bottom,#fff 0,#ececec 100%); color: #26632e; border-color: #26632e;">
+							<span class="glyphicon glyphicon-search"></span> Search
+							</button>
+						</form>
+						</div>
+						</ul>
+					</li>
+		      <ul class="nav navbar-nav navbar-right">
+		        <li class="nav-item" ><a href="#"><h4 id="navlinks"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Account</h4></a></li>
+		        <li class="nav-item" ><a href="/login"><h4 id="navlinks"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login</h4></a></li>
+		      </ul>
+		    </div>
 		  </div>
 		</nav>
 
