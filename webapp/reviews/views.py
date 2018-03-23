@@ -39,5 +39,4 @@ def reviews(request, book_id):
             'book': book,
             'reviews': reviews,
             'form': form,
-            'average_rating': average_rating
         })
