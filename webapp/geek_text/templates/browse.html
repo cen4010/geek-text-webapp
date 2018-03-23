@@ -2,69 +2,15 @@
 
 {% block content %}
 <style>
-.fil-item {
-margin-bottom: 8px;
-}
-.btn-secondary{
-  padding: 4px; background-image:
-  linear-gradient(to bottom,#fff 0, #ececec 100%);
-  color: #26632e;
-  border-color: #26632e;
-  width: 55%;
-  height: 42%;
-  margin: 3px;
-}
-#filterby:hover{
-  background-color: #c7c7c7;
-}
-.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
-    z-index: 2;
-    color: #fff;
-    cursor: default;
-    background-color: #258e32;
-    border-color: #258e32;
-}
-.pagination>li>a, .pagination>li>span {
-    position: relative;
-    float: left;
-    padding: 6px 12px;
-    margin-left: -1px;
-    line-height: 1.42857143;
-    color: #258e32;
-    text-decoration: none;
-    background-color: #fff;
-    border: 1px solid #ddd;
-}
-@media(min-width: 769px){
-  .fil-item {
-      width: 16%;
-      margin: 0;
-      display: inline-block;
-      padding-right: 15px;
-  }
-}
-@media(max-width: 769px){
-.btn-secondary{
-  width: 50%;
-}
-}
 </style>
 {% load widget_tweaks %}
-     <nav class="navbar navbar-inverse" style="z-index: 0; height: 100%; background-image: -webkit-linear-gradient(top,#ececec 0,#ececec 100%); border: 0px; border-radius: 0px; margin-bottom: 0px;
-         border-color: #2d943a;">
+     <nav class="navbar navbar-inverse" id="filterbar">
        <div class="container-fluid">
          <div class="navbar-header">
-          <h4 id="filterby" class="navbar-toggle" data-toggle="collapse" data-target="#myFilterbar" style="float: left;
-            padding: 5px 10px;
-            margin-top: 10px;
-            margin-right: 15px;
-            margin-left: 15px;
-            margin-bottom: 5px;
-            border: 0px solid transparent;
-            border-radius: 0px;"> <span class="glyphicon glyphicon-filter"></span> Filter By:</span></h4>
+          <h4 id="filterby" class="navbar-toggle" data-toggle="collapse" data-target="#myFilterbar"> <span class="glyphicon glyphicon-filter"></span> Filter By:</span></h4>
           </div>
-         <div class="collapse navbar-collapse" id="myFilterbar" style="border-color: #c7c7c7; border-top: solid 1px #c7c7c7;">
-           <ul class="nav filter" style="margin: 10px 15px 5px;">
+         <div class="collapse navbar-collapse" id="myFilterbar">
+           <ul class="nav filter">
             <form method="get">
              <li class="fil-item">
                  {{ filter.form.genre.label_tag }}
@@ -75,7 +21,7 @@ margin-bottom: 8px;
                   {% render_field filter.form.author class="form-control" %}
               </li>
               <li class="fil-item">
-                    <p>For Ratings</p>
+                   <p>For Ratings</p>
                    {{ filter.form.rating.label_tag }}
                    {% render_field filter.form.rating class="form-control" %}
               </li>
@@ -84,25 +30,21 @@ margin-bottom: 8px;
                     {% render_field filter.form.o class="form-control" %}
               </li>
               <li class="fil-item">
-                   <div class="">
                      {% csrf_token %}
                      <label for="id_per_page" >Results Per Page:</label></br>
                      <select name="p" class="form-control" >
                          <option value="10">10</option>
                          <option value="20">20</option>
                      </select>
-                   </div>
-                </li>
-                <li class="fil-item">
+              </li>
+              <li class="fil-item">
                   <div class="">
                    <button type="submit" class="btn btn-secondary" >
-                   <span class="glyphicon glyphicon-search"></span> Submit
-                   </button>
-                  </form>
+                   <span class="glyphicon glyphicon-search"></span> Submit</button>
+                </form>
                    <form action="">
                      <button type="submit" class="btn btn-secondary" >
-                     <span class="glyphicon glyphicon-remove"></span> Reset
-                     </button>
+                     <span class="glyphicon glyphicon-remove"></span> Reset</button>
                    </form>
                  </div>
                  </li>
@@ -111,27 +53,43 @@ margin-bottom: 8px;
        </div>
      </nav>
 
-<div class="row" style="padding: 5px 10px 10px 5px; margin: 0 0 0 0; background-color: #fff; border-top: solid 1px #c7c7c7;">
+<div class="row" id="bookContent" >
     {% for book in books%}
-        <div class="book" style="padding-top: 30px;">
-          <div class="row">
-            <div class="col-sm-6 title">
-              <h4><a href="/books/{{ book.id }}">{{ book.title }}</a></h4>
+        <div class="book" style="padding-bottom: 30px;">
+          <div class="row" style="padding: 10px; border-bottom: solid 1px #ddd; ">
+            <div class="col-sm-3">
+              <div class="center">
+                <a href="/books/{{ book.id }}"><img width=150px src="{{ book.cover.url }}"/></a>
+              </div>
             </div>
-            <div class="col-sm-6 author">
-              <p>By: {{ book.author }}</p>
+            <div class="col-sm-9 bookinfo">
+              <div class="col-sm-12 title">
+                <h3 id="bookTitle"><a href="/books/{{ book.id }}">{{ book.title }}</a></h3>
+              </div>
+              <div class="col-sm-12 details">
+                <div class="col-xs-6">
+                  <p>By: {{ book.author }}</p>
+                </div>
+                <div class="col-xs-6">
+                  <p>{{ book.publish_date }}</p>
+                </div>
+                <div class="col-xs-6">
+                  <p>{{ book.genre }}</p>
+                </div>
+                <div class="col-xs-6">
+                  <p>{{ book.publisher }}</p>
+                </div>
+                <div class="col-xs-6">
+                  <h5>Rating</h5>
+                </div>
+                <div class="col-xs-6">
+                  <h4>Price: Free</h4>
+                </div>
+
             </div>
           </div>
             <div class="row details">
-              <div class='col-sm-3'>
-                <p>{{ book.publisher }}</p>
-              </div>
-              <div class='col-sm-3'>
-                <p>{{ book.publish_date }}</p>
-              </div>
-              <div class='col-sm-3'>
-                <p>{{ book.genre }}</p>
-              </div>
+
             </div>
         </div>
     {% endfor %}

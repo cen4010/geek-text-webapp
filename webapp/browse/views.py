@@ -14,10 +14,11 @@ def browse(request):
     filtered = bookFilter(request.GET, queryset=qs)
     qs = filtered.qs
 
+    #rateFilter = ratingFilter(request.GET, queryset=Book.objects.all())
+
+
     #How many results does the user want to see?
     per_page = int(request.GET.get('p',10))
-
-
 
     paginator = Paginator(qs, per_page)
     page = request.GET.get('page')
