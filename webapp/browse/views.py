@@ -33,6 +33,6 @@ def browse(request):
 
     return render(
         request,
-         'browse.html', {'books': books, 'filter': filtered }
+         'browse/browse.html', {'books': books, 'filter': filtered }
         #context={'bookList':bookList, 'fantasyList':fantasyList, 'scifiList':scifiList, 'genreList': genreList}
     )
