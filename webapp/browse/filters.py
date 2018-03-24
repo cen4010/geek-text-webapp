@@ -1,4 +1,5 @@
 from book_details.models import Book, Author, Publisher, Genre
+from reviews.models import Review
 import django_filters
 from django_filters import OrderingFilter
 
@@ -16,4 +17,11 @@ class bookFilter(django_filters.FilterSet):
 
     class Meta:
         model = Book
-        fields = ['author', 'genre', ]
+        fields = ['title', 'author', 'genre']
+
+
+#class ratingFilter(django_filters.FilterSet):
+
+#    class Meta:
+#        model = Review
+#        fields = ['comment' ]
