@@ -1,22 +1,175 @@
-
-
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   body {
+       padding-bottom: 10px;
+       font-size: 16px;
+   }
+   #head-toggle {
+       background-color: #26632e !important;
+   }
+   .navbar-nav {
+       margin: 0px 5px !important;
+   }
+   .nav-item:hover{
+     background-color: #194a20 !important;
+   }
+   .nav-item{
+     height: 55px;
+   }
+   .navbar-collapse {
+     border-color: #101010;
+     padding: 0;
+   }
+   .btn-primary:hover {
+       background-color: #ececec !important;
+       background-position: 0 -15px;
+       border-color: #2d943a;
+   }
+   .btn-primary {
+       background-color: #ececec !important;
+       background-position: 0 -15px;
+   }
+   #navlinks{
+     margin-top: 5px;
+     color: #fff !important;
+     font-size: 16px;
+   }
+   #searchbarholder{
+     padding: 10px 0;
+     width: 900px;
+   }
+   .navcontainer{
+     padding-right: 15px;
+     padding-left: 15px;
+   }
+   #geekNav{
+     height: 55px;
+     background-image: -webkit-linear-gradient(top,#2d943a 0,#158223 100%);
+     border: 0px; border-radius: 0px;
+     margin-bottom: 0px;
+     border-color: #2d943a;
+     -webkit-box-shadow: 2px 3px 4px 2px #7c7c7c;
+     -moz-box-shadow:    0px 2px 3px 1px #7c7c7c;
+     box-shadow:         0px 2px 3px 1px #7c7c7c;
+     z-index: 1;
+   }
+   @media(max-width: 768px)
+   {
+     #myNavbar {
+       border-color: #101010 !important;
+       background-color: #26632e !important;
+       padding: 0;
+       margin-top: 5px;
+     }
+     #search {
+         margin: 0px 5px !important;
+         width:85%;
+     }
+     #searchbarholder{
+       padding: 10px 0;
+       width: 100%;
+     }
+     #navlinks {
+       width: 100%;
+     }
+     .nav-item {
+       width: 100%;
+     }
+   }
+   @media(min-width: 769px) and (max-width: 1150px)
+   {
+     #searchbarholder{
+       padding: 10px 0;
+       width: 350px;
+     }
+   }
+   .fil-item {
+   margin-bottom: 8px;
+   }
+   .btn-secondary{
+     padding: 4px; background-image:
+     linear-gradient(to bottom,#fff 0, #ececec 100%);
+     color: #26632e;
+     border-color: #26632e;
+     width: 55%;
+     height: 42%;
+     margin: 3px;
+   }
+   #filterby:hover{
+     background-color: #c7c7c7;
+   }
+   .pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
+       z-index: 2;
+       color: #fff;
+       cursor: default;
+       background-color: #258e32;
+       border-color: #258e32;
+   }
+   .pagination>li>a, .pagination>li>span {
+       position: relative;
+       float: left;
+       padding: 6px 12px;
+       margin-left: -1px;
+       line-height: 1.42857143;
+       color: #258e32;
+       text-decoration: none;
+       background-color: #fff;
+       border: 1px solid #ddd;
+   }
+   .center {
+       display: block;
+       margin-left: auto;
+       margin-right: auto;
+       width: 50%;
+   }
+   #filterby{
+       float: left;
+       padding: 5px 10px;
+       margin-top: 10px;
+       margin-right: 15px;
+       margin-left: 15px;
+       margin-bottom: 5px;
+       border: 0px solid transparent;
+       border-radius: 0px;
+   }
+   #filterbar{
+       z-index: 0;
+       height: 100%;
+       background-image: -webkit-linear-gradient(top,#ececec 0,#ececec 100%);
+       border: 0px;
+       border-radius: 0px;
+       margin-bottom: 0px;
+       border-color: #2d943a;
+   }
+   #myFilterbar{
+     border-color: #c7c7c7;
+   }
+   .filter{
+     margin: 10px 20px 5px;
+   }
+   #bookContent{
+       padding: 20px 10% 10px 10%;
+       margin: 0;
+       background-color: #fff;
+       border-top: solid 1px #c7c7c7;
+   }
+   #bookTitle{
+     margin-bottom: 20px;
+   }
+   @media(min-width: 769px){
+     .fil-item {
+         width: 16%;
+         margin: 0;
+         display: inline-block;
+         padding-right: 15px;
+     }
+   }
+   @media(max-width: 769px){
+   .btn-secondary{
+     width: 50%;
+   }
+   .filter{
+     margin: 10px 20px 5px;
+   }
+   }
