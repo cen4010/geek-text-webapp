@@ -1,4 +1,5 @@
 {% extends 'geek_text/base.html' %}
+{% load review_filters %}
 
 {% block content %}
 <style>
@@ -80,7 +81,7 @@
                   <p>{{ book.publisher }}</p>
                 </div>
                 <div class="col-xs-6">
-                  <p>Rating<p>
+                  <h5>{{ book|avg_rating }}</h5>
                 </div>
                 <div class="col-xs-6">
                   <h4 class="bold">Price: Free</h4>
