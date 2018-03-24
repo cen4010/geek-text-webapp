@@ -8,16 +8,32 @@
 		<div class="container-fluid">
 			<div class="wrapper-row">
 				<h2 class="product-title">{{ book.title }}</h2>
-				<div class="product-author"><i>by</i> {{ book.author }}</div>
+				<div class="product-author"><i>by</i> <a href="#" data-toggle="modal" data-target="#authorModal">{{ book.author }}</a></div>
+				<div id="authorModal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">{{ book.author}} Bio</h4>
+							</div>
+							<div class="modal-body">
+								<p>{{ book.author.bio }}</p>
+								<br/>
+								<a class="btn btn-info btn-block" href="/browse?author={{ book.author.id }}">More By This Author</a>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<br/>
 			<div class="wrapper-row">
 				<div class="preview col-md-4">
-					<img width=100% src="{{ book.cover.url }}"/>
+					<img class="img-responsive" src="{{ book.cover.url }}"/>
 				</div>
 				<div class="details col-md-6">
 					<div class="rating">{{ book|avg_rating }}</div>
 					<h5 class="product-publish"><strong>{{ book.publisher }} - <i>{{ book.publish_date }}</i></strong></h5>
+					<br/>
 					<p class="product-description">{{ book.description }}</p>
 					<br/>
 					<h6 class="product-genre"><i>Genre: {{ book.genre }}</i></h6>
@@ -30,13 +46,16 @@
 	</div>
 </div>
 
-
-
-
-
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+</script>
 
 {% else %}
 <p>This book does not exist!</p>
 {% endif %}
 {% endblock content %}
+
+
 
