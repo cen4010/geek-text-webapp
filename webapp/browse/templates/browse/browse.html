@@ -53,7 +53,7 @@
        </div>
      </nav>
 
-<div class="row" id="bookContent" >
+<div class="container-fluid" id="bookContent" >
     {% for book in books%}
         <div class="book" style="padding-bottom: 30px;">
           <div class="row" style="padding: 10px; border-bottom: solid 1px #ddd; ">
@@ -64,11 +64,11 @@
             </div>
             <div class="col-sm-9 bookinfo">
               <div class="col-sm-12 title">
-                <h3 id="bookTitle"><a href="/books/{{ book.id }}">{{ book.title }}</a></h3>
+                <h3 class="bold" id="bookTitle"><a href="/books/{{ book.id }}">{{ book.title }}</a></h3>
               </div>
               <div class="col-sm-12 details">
                 <div class="col-xs-6">
-                  <p>By: {{ book.author }}</p>
+                  <p class="bold">By: {{ book.author }}</p>
                 </div>
                 <div class="col-xs-6">
                   <p>{{ book.publish_date }}</p>
@@ -80,18 +80,15 @@
                   <p>{{ book.publisher }}</p>
                 </div>
                 <div class="col-xs-6">
-                  <h5>Rating</h5>
+                  <p>Rating<p>
                 </div>
                 <div class="col-xs-6">
-                  <h4>Price: Free</h4>
+                  <h4 class="bold">Price: Free</h4>
                 </div>
-
             </div>
           </div>
-            <div class="row details">
-
-            </div>
         </div>
+      </div>
     {% endfor %}
   </div>
   {% if books.has_other_pages %}

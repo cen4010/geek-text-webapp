@@ -2,9 +2,37 @@
    Author's custom styles
    ========================================================================== */
    body {
-       padding-bottom: 10px;
+       padding-bottom: 0px;
        font-size: 16px;
    }
+   .list-unstyled{
+    line-height: 18px;
+   }
+   a{
+     color: #158223;
+   }
+   a:hover{
+     color: #194a20;
+   }
+   .bold{
+    font-weight: bold;
+   }
+   .page-footer{
+     margin-top: 30px;
+    border-top: solid 1px #c7c7c7;
+   }
+  .page-footer p{
+     font-size: 12px;
+   }
+   .page-footer a{
+      font-size: 12px;
+    }
+   .footer-copyright{
+      background-color: #2d943a;
+      height: 35px;
+      padding-top: 10px;
+      color: #fff;
+    }
    #head-toggle {
        background-color: #26632e !important;
    }
@@ -155,7 +183,7 @@
        border-top: solid 1px #c7c7c7;
    }
    #bookTitle{
-     margin-bottom: 20px;
+     margin-bottom: 25px;
    }
    @media(min-width: 769px){
      .fil-item {
