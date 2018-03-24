@@ -1,20 +1,39 @@
 {% extends 'geek_text/base.html' %}
+{% load review_filters %}
 
 {% block content %}
-<p>This page displays all major details of a book!</p>
-
 {% if book %}
-<p>These are the details about "{{ book.title }}":</p>
-<table>
-	<tr><td>Author<td><td>{{ book.author }}</td></tr>
-	<tr><td>Description<td><td>{{ book.description }}</td></tr>
-	<tr><td>Genre<td><td>{{ book.genre }}</td></tr>
-	<tr><td>Publisher<td><td>{{ book.publisher }}</td></tr>
-	<tr><td>Publish Date<td><td>{{ book.publish_date }}</td></tr>
-</table>
+<div class="container">
+	<div class="card">
+		<div class="container-fluid">
+			<div class="wrapper-row">
+				<h2 class="product-title">{{ book.title }}</h2>
+				<div class="product-author"><i>by</i> {{ book.author }}</div>
+			</div>
+			<br/>
+			<div class="wrapper-row">
+				<div class="preview col-md-4">
+					<img width=100% src="{{ book.cover.url }}"/>
+				</div>
+				<div class="details col-md-6">
+					<div class="rating">{{ book|avg_rating }}</div>
+					<h5 class="product-publish"><strong>{{ book.publisher }} - <i>{{ book.publish_date }}</i></strong></h5>
+					<p class="product-description">{{ book.description }}</p>
+					<br/>
+					<h6 class="product-genre"><i>Genre: {{ book.genre }}</i></h6>
+				</div>
+				<div class="shopping col-md-2">
+					<!-- Shopping links will go here if implemented -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-<p>Cover:</p>
-<img src="{{ book.cover.url }}"/>
+
+
+
+
 
 {% else %}
 <p>This book does not exist!</p>
