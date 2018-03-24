@@ -17,13 +17,20 @@ def reviews(request, book_id):
     except Book.DoesNotExist:
         pass
 
+    if request.user.is_authenticated:
+        try:
+            review = Review.objects.get(book=book, user=request.user)
+        except Review.DoesNotExist:
+            review = Review(book=book, user=request.user)
+    else:
+        review = None
+
     if request.method == 'POST':
-        review = Review(book=book, user=request.user)
         form = ReviewForm(request.POST, instance=review)
         if form.is_valid():
             form.save()
     else:
-        form = ReviewForm()
+        form = ReviewForm(instance=review)
 
     return render(
         request,
@@ -32,5 +39,4 @@ def reviews(request, book_id):
             'book': book,
             'reviews': reviews,
             'form': form,
-            'average_rating' : average_rating
         })
