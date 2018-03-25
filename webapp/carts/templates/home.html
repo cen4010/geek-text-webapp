@@ -1,0 +1,45 @@
+{% extends 'geek_text/base.html' %}
+{% block content %}
+<h1>Cart</h1>
+
+{% if cart.cartItem.exists %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Book Name</th>
+      <th>Book Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in cart.cartItem.all %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td><a href='{{ item.book.get_absolute_url }}'>{{ item.book.title }}</a> 
+        <!-- {% include 'cartItem/snippets/update-cart.html' with product=product cart=cart in_cart=True %} -->
+      </td>
+      <td>{{ item.price }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="2"></td>
+      <td><b>Subtotal</b> {{ cart.subtotal }}</td>
+    </tr>
+    <tr>
+      <td colspan="2"></td>
+      <td><b>Total</b> {{ cart.total }}</td>
+    </tr>
+    <tr>
+      <td colspan="2"></td>
+      <td><a class='btn btn-lg btn-success' href='{% url "cart:checkout" %}'>Checkout</a></td>
+    </tr>
+
+  </tbody>
+</table>
+
+{% else %}
+<h1 class='lead'>Cart is empty</h1>
+{% endif %}
+
+
+{% endblock %}

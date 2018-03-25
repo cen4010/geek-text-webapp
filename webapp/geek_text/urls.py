@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^browse/', include('browse.urls', namespace='browse')),
     url(r'^books/', include('book_details.urls', namespace='books')),
     url(r'^reviews/', include('reviews.urls', namespace='reviews')),
+    url(r'^cart/', include('carts.urls', namespace='carts')),
 ]

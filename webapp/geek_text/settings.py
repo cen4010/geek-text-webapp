@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django_seed',
     'book_details',
     'browse',
+    'carts',
     'reviews',
     'geek_text',
 ]
