@@ -40,22 +40,22 @@ class CartsManager(models.Manager):
 
 # cartItems realte to the Cart to support multiple items
 class CartItem(models.Model):
-    book = models.ForeignKey(Book, related_name='book')
-    quantity = models.IntegerField(default=1)
-    price = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
-    book_price_quantity = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
+    book = models.ForeignKey('Relative to the book',Book, related_name='book')
+    quantity = models.IntegerField('quantity of books',default=1)
+    price = models.DecimalField('Temp: Price of book',max_digits=6, decimal_places=2, blank=True, null=True)
+    book_price_quantity = models.DecimalField('Price of Line Item: BookPricexQuantity',max_digits=8, decimal_places=2, blank=True, null=True)
     def __str__(self):
         return str(self.id)
 
 
 # Tied the cart to the user for persistance for when a user signs in they want to acess their cart.
 class Cart(models.Model):
-    user = models.ForeignKey(User, null=True, blank=True)
-    cartItems = models.ManyToManyField(CartItem, blank=True)
+    user = models.ForeignKey('Cart Owner',User, null=True, blank=True)
+    cartItems = models.ManyToManyField('Items to go into cart',CartItem, blank=True)
     subtotal = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
-    total = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
-    updated = models.DateTimeField(auto_now=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    total = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
+    updated = models.DateTimeField('Last Change to Cart',auto_now=True)
+    timestamp = models.DateTimeField('Time of Cart Creation',auto_now_add=True)
     objects = CartsManager()
 
     def __str__(self):
