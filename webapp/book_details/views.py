@@ -6,14 +6,16 @@ from .forms import ReviewForm
 
 def details(request, book_id):
     book = None
+    reviews = None
+    average_rating = None
 
     try:
         book = Book.objects.get(id=book_id)
+        reviews = Review.objects.filter(book=book)
+        average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
     except Book.DoesNotExist:
         pass
 
-    reviews = Book.objects.get(book=book)
-    average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
 
     if request.user.is_authenticated:
         try:
