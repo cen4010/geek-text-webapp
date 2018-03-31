@@ -1,7 +1,7 @@
 from django import template
 from django.db.models import Avg
 
-from reviews.models import Review
+from .models import Review
 
 register = template.Library()
 
