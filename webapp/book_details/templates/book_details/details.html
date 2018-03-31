@@ -50,21 +50,16 @@
 <p>This book does not exist!</p>
 {% endif %}
 {% if book %}
-<div class="container">
+<br/>
+<div class="container" style="float:left">
 	<div class="row">
 		{% if user.is_authenticated %}
 			<form method="post">
 				{% csrf_token %}
 
-				<div class="col-md-8 col-md-offset-2">
+				<div class="col-md-10 col-md-offset-2">
 					<div class="row">
-						<div class="form-check col-md-6">
-							<br>
-							{{ form.anonymous }}
-							<label>Post anonymously?</label>
-						</div>
-
-						<div class="form-group col-md-6">
+						<div class="form-group col-md-12">
 							<label>Rating</label>
 							{{ form.rating }}
 						</div>
@@ -78,14 +73,22 @@
 					</div>
 
 					<div class="row">
-						<div class="form-group col-md-6">
+						<div class="form-group col-md-3">
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</div>
+
+						<div class="form-check col-md-9" style="float:left">
+							{{ form.anonymous }}
+							<label>Post anonymously?</label>
+						</div>
+
 					</div>
 				</div>
 			</form>
 		{% endif %}
 	</div>
+
+	<br/>
 
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
@@ -107,7 +110,7 @@
 		</div>
 	</div>
 {% else %}
-	<p>This book does not exist!</p>
+	<p>No reviews for a non-existent book!</p>
 {% endif %}
 </div>
 {% endblock content %}
