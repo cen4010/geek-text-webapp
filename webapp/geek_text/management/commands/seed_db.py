@@ -3,8 +3,7 @@ from django.core.management.base import BaseCommand
 from django_seed import Seed
 
 from django.contrib.auth.models import User
-from book_details.models import Book, Author, Publisher, Genre
-from reviews.models import Review
+from book_details.models import Book, Author, Publisher, Genre, Review
 
 class Command(BaseCommand):
     help = 'Seeds the local DB by adding model instances'
