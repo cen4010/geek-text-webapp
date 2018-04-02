@@ -1,5 +1,4 @@
-from book_details.models import Book, Author, Publisher, Genre
-from reviews.models import Review
+from book_details.models import Book, Author, Publisher, Genre, Review
 import django_filters
 from django_filters import OrderingFilter
 
