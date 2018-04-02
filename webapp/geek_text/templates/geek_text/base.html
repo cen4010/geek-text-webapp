@@ -1,111 +1,112 @@
 {% load staticfiles %}
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>Geek Text</title>
-		<meta name="description" content="Book shopping site, with the right geek cred">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
-		<style>
-		</style>
-		<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}" />
-		<link rel="stylesheet" href="{% static 'css/main.css' %}" />
-				{% load widget_tweaks %}
-		<nav class="navbar navbar-inverse" id="geekNav">
-		  <div class="container-fluid navcontainer">
-		    <div class="navbar-header">
-		      <button id="head-toggle" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style=" border-color: #fff;">
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
-		      <a class="navbar-brand" href="/browse" style="color: #fff; padding: 3px 25px 5px 20px;">{% load static %} <img src="{% static "Images/Geek_Text_logo_White.png" %}" alt="Geek Text" height="53px" /></a>
-		    </div>
-		    <div class="collapse navbar-collapse" id="myNavbar">
-					<ul class="nav navbar-nav" id="search">
-					<li id="searchbarholder">
-						<div class="col-xs-10"  style="padding: 0 5px 10px 10px;">
-						<form action = "/browse/" method="get">
-							{% render_field filter.form.title class="form-control" %}
-							</div>
-							<div class="col-xs-2"  style="padding: 0 10px 10px 5px;">
-							<button type="submit" class="btn btn-primary" style="background-image: linear-gradient(to bottom,#fff 0,#ececec 100%); color: #26632e; border-color: #26632e;">
-							<span class="glyphicon glyphicon-search"></span> Search
-							</button>
-						</form>
-						</div>
-						</ul>
-					</li>
-		      <ul class="nav navbar-nav navbar-right">
-		        <li class="nav-item" ><a href="#"><h4 id="navlinks"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Account</h4></a></li>
-		        <li class="nav-item" ><a href="/login"><h4 id="navlinks"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login</h4></a></li>
-		      </ul>
-		    </div>
-		  </div>
-		</nav>
+ <head>
+	 <meta charset="utf-8">
+	 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	 <title>Geek Text</title>
+	 <meta name="description" content="Book shopping site, with the right geek cred">
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+	 <style>
+	 </style>
+	 <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}" />
+	 <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+			 {% load widget_tweaks %}
+	 <nav class="navbar navbar-inverse" id="geekNav">
+		 <div class="container-fluid navcontainer">
+			 <div class="navbar-header">
+				 <button id="head-toggle" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style=" border-color: #fff;">
+					 <span class="icon-bar"></span>
+					 <span class="icon-bar"></span>
+					 <span class="icon-bar"></span>
+				 </button>
+				 <a class="navbar-brand" href="/browse" style="color: #fff; padding: 3px 25px 5px 20px;">{% load static %} <img src="{% static "Images/Geek_Text_logo_White.png" %}" alt="Geek Text" height="53px" /></a>
+			 </div>
+			 <div class="collapse navbar-collapse" id="myNavbar">
+				 <ul class="nav navbar-nav" id="search">
+				 <li id="searchbarholder">
+					 <div class="col-xs-10"  style="padding: 0 5px 10px 10px;">
+					 <form action = "/browse/" method="get">
+						 {% render_field filter.form.title class="form-control" %}
+						 </div>
+						 <div class="col-xs-2"  style="padding: 0 10px 10px 5px;">
+						 <button type="submit" class="btn btn-primary" style="background-image: linear-gradient(to bottom,#fff 0,#ececec 100%); color: #26632e; border-color: #26632e;">
+						 <span class="glyphicon glyphicon-search"></span> Search
+						 </button>
+					 </form>
+					 </div>
+					 </ul>
+				 </li>
+				 <ul class="nav navbar-nav navbar-right">
+					 <li class="nav-item" ><a href="#"><h4 id="navlinks"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Account</h4></a></li>
+					 <li class="nav-item" ><a href="/login"><h4 id="navlinks"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login</h4></a></li>
+					 <li class="nav-item" ><a href="#"><h4 id="navlinks"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;Cart</h4></a></li>
+				 </ul>
+			 </div>
+		 </div>
+	 </nav>
 
-		{% block head %}
-		{% endblock head %}
-	</head>
-	<body>
-		{% block content %}
-		{% endblock content %}
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script>window.jQuery || document.write('<script src="{% static "js/vendor/jquery-1.11.2.min.js" %}"><\/script>')</script>
+	 {% block head %}
+	 {% endblock head %}
+ </head>
+ <body>
+	 {% block content %}
+	 {% endblock content %}
+	 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	 <script>window.jQuery || document.write('<script src="{% static "js/vendor/jquery-1.11.2.min.js" %}"><\/script>')</script>
 
-		<script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+	 <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
 
-		<script src="{% static 'js/main.js' %}"></script>
-	</body>
+	 <script src="{% static 'js/main.js' %}"></script>
+ </body>
 
-	<!--Footer-->
-	<Footer class="page-footer" style="" >
-	    <!--Footer Links-->
-	    <div class="container-fluid text-center text-md-left" style="background-color: #ececec;  padding-top: 10px;">
-	        <div class="row">
+ <!--Footer-->
+ <Footer class="page-footer" style="" >
+		 <!--Footer Links-->
+		 <div class="container-fluid text-center text-md-left" style="background-color: #ececec;  padding-top: 10px;">
+				 <div class="row">
 
-	            <!--First column-->
-	            <div class="col-md-6" style="margin-top: 15px;">
-	                <a href="/browse"><img src="{% static "Images/Geek_Text_logo_Black.png" %}" alt="Geek Text" height="40px" /></a>
-	                <p style="margin-top: 15px;">This website is a project for our Software Engineering Class.</p>
-								  <a href="https://github.com/cen4010/geek-text-webapp">GitHub</a>
-	            </div>
-	            <!--/.First column-->
+						 <!--First column-->
+						 <div class="col-md-6" style="margin-top: 15px;">
+								 <a href="/browse"><img src="{% static "Images/Geek_Text_logo_Black.png" %}" alt="Geek Text" height="40px" /></a>
+								 <p style="margin-top: 15px;">This website is a project for our Software Engineering Class.</p>
+								 <a href="https://github.com/cen4010/geek-text-webapp">GitHub</a>
+						 </div>
+						 <!--/.First column-->
 
-	            <!--Second column-->
-	            <div class="col-md-6" style="">
-	                <h5 class="bold">Group 4 Members</h5>
-	                <ul class="list-unstyled">
-	                    <li>
-	                        <a href="https://github.com/codeTony22">Jose Gonzalez</a>
-	                    </li>
-	                    <li>
-	                        <a href="https://github.com/FreakoNico">Nicolas Gonzalez</a>
-	                    </li>
-	                    <li>
-	                        <a href="https://github.com/ogonz110">Otto Gonzalez-vega</a>
-	                    </li>
-	                    <li>
-	                        <a href="https://github.com/loksonarius">Daniel Herrera</a>
-	                    </li>
-											<li>
-													<a href="https://github.com/fhern077">Frank Hernandez</a>
-											</li>
-	                </ul>
-	            </div>
-	            <!--/.Second column-->
-	        </div>
-	    </div>
-	    <!--/.Footer Links-->
+						 <!--Second column-->
+						 <div class="col-md-6" style="">
+								 <h5 class="bold">Group 4 Members</h5>
+								 <ul class="list-unstyled">
+										 <li>
+												 <a href="https://github.com/codeTony22">Jose Gonzalez</a>
+										 </li>
+										 <li>
+												 <a href="https://github.com/FreakoNico">Nicolas Gonzalez</a>
+										 </li>
+										 <li>
+												 <a href="https://github.com/ogonz110">Otto Gonzalez-vega</a>
+										 </li>
+										 <li>
+												 <a href="https://github.com/loksonarius">Daniel Herrera</a>
+										 </li>
+										 <li>
+												 <a href="https://github.com/fhern077">Frank Hernandez</a>
+										 </li>
+								 </ul>
+						 </div>
+						 <!--/.Second column-->
+				 </div>
+		 </div>
+		 <!--/.Footer Links-->
 
-	    <!--Copyright-->
-	    <div class="footer-copyright py-3 text-center">
-	        <p style="margin-bottom:8px;">© 2018 Copyright</p>
-	    </div>
-	    <!--/.Copyright-->
+		 <!--Copyright-->
+		 <div class="footer-copyright py-3 text-center">
+				 <p style="margin-bottom:8px;">© 2018 Copyright</p>
+		 </div>
+		 <!--/.Copyright-->
 
-	</Footer>
-	<!--/.Footer-->
+ </Footer>
+ <!--/.Footer-->
 </html>

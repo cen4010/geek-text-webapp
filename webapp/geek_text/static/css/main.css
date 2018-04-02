@@ -58,6 +58,9 @@
        background-color: #ececec !important;
        background-position: 0 -15px;
    }
+   #search {
+     width: 50%;
+   }
    #navlinks{
      margin-top: 5px;
      color: #fff !important;
@@ -65,7 +68,7 @@
    }
    #searchbarholder{
      padding: 10px 0;
-     width: 900px;
+     width: 100%;
    }
    .navcontainer{
      padding-right: 15px;
@@ -104,12 +107,41 @@
      .nav-item {
        width: 100%;
      }
+     #bookContent{
+         padding: 20px 5% 10px 5% !important;
+         margin: 0;
+         background-color: #fff;
+         border-top: solid 1px #c7c7c7;
+     }
    }
    @media(min-width: 769px) and (max-width: 1150px)
    {
      #searchbarholder{
        padding: 10px 0;
-       width: 350px;
+       width: 100%;
+     }
+     #search {
+         margin: 0px 5px !important;
+         width:25%;
+     }
+     #bookContent{
+         padding: 20px 5% 10px 5% !important;
+         margin: 0;
+         background-color: #fff;
+         border-top: solid 1px #c7c7c7;
+     }
+     .nav-item>a{
+       padding-right: 10px !important;
+       padding-left: 10px !important;
+     }
+     #navlinks{
+       font-size: 15px;
+     }
+     .center {
+         display: block;
+         margin-left: 10% !important;
+         margin-right: auto;
+         width: 50%;
      }
    }
    .fil-item {
@@ -120,7 +152,7 @@
      linear-gradient(to bottom,#fff 0, #ececec 100%);
      color: #26632e;
      border-color: #26632e;
-     width: 55%;
+     width: 75%;
      height: 42%;
      margin: 3px;
    }
