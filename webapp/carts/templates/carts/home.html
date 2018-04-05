@@ -1,0 +1,62 @@
+{% extends 'geek_text/base.html' %} {% block content %}
+
+<div class="container">
+  <h1> Cart
+    <span class="glyphicon glyphicon-shopping-cart"></span>
+  </h1>
+
+  {% if cart.cartItems.exists %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Item #</th>
+        <th>Image Preiview</th>
+        <th>Book Name</th>
+        <th>Book Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart.cartItems.all %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>
+          <img src="{{ item.book.cover.url }}" width="75px" />
+        </td>
+        <td>
+
+          <a href='/books/{{item.book.id}}'>{{ item.book.title }}</a>
+          <form class='form-product-ajax' method='POST' action='remove/' class="form"> {% csrf_token %}
+            <input type='hidden' name='item_id' value='{{ item.id }}' />
+
+            <button type='submit' class='btn btn-link btn-sm' style="padding:0px;cursor: pointer;">Remove?</button>
+            </span>
+          </form>
+        </td>
+
+
+        <td>${{ item.price }}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="3"></td>
+        <td>
+          <b>Subtotal</b> ${{ cart.subtotal }}</td>
+      </tr>
+      <tr>
+        <td colspan="3"></td>
+        <td>
+          <b>Total</b> ${{ cart.total }}</td>
+      </tr>
+      <tr>
+        <td colspan="3"></td>
+        <td>
+          <a class='btn btn-lg btn-success' href=''>Checkout</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  {% else %}
+  <h1 class='lead'> Your Cart is Empty</h1>
+  {% endif %} {% endblock %}
+</div>
