@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.redirects',
     'widget_tweaks',
     'storages',
+    'carts',
     'django_seed',
     'djmoney',
     'book_details',
