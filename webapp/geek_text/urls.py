@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^registration/$', signup, name='signup'),
     url(r'^browse/', include('browse.urls', namespace='browse')),
     url(r'^books/', include('book_details.urls', namespace='books')),
+    url(r'^cart/', include("carts.urls", namespace='cart'))
 ]
