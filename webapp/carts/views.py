@@ -10,7 +10,7 @@ def cart_home(request):
     print('home')
     cart_obj, new_obj = Cart.objects.new_or_get(request)
     cart_price_update(cart_obj)
-    return render(request, "home.html", {"cart": cart_obj})
+    return render(request, "carts/home.html", {"cart": cart_obj})
 
 
 def cart_checkout(request):
