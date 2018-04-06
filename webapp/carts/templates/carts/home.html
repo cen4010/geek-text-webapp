@@ -73,19 +73,4 @@
   {% endif %}
 </div>
 
-<script>
-  //scripts are loadded after the block hence needed to add this dom listener to make sure jquery was avilable
-  document.addEventListener("DOMContentLoaded", function (event) {
-    // $('select').on('change', function () {
-    //   var itemID = this.id;
-    //   console.log(this);
-    //   $.post("update_quantity/",
-    //     {
-    //       quantity: this.value,
-    //       cartItemId: itemID,
-    //      
-    //     }
-    //   );
-    // })
-  });
-</script> {% endblock %}
+ {% endblock %}
