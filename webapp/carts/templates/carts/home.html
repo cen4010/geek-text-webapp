@@ -13,17 +13,18 @@
         <th>Image Preiview</th>
         <th>Book Name</th>
         <th>Book Price</th>
+        <th>Quantity</th>
       </tr>
     </thead>
     <tbody>
       {% for item in cart.cartItems.all %}
       <tr>
-        <th scope="row">{{ forloop.counter }}</th>
+        <th scope="row">{{ forloop.counter }}
+        </th>
         <td>
           <img src="{{ item.book.cover.url }}" width="75px" />
         </td>
         <td>
-
           <a href='/books/{{item.book.id}}'>{{ item.book.title }}</a>
           <form class='form-product-ajax' method='POST' action='remove/' class="form"> {% csrf_token %}
             <input type='hidden' name='item_id' value='{{ item.id }}' />
@@ -32,25 +33,36 @@
             </span>
           </form>
         </td>
-
-
         <td>${{ item.price }}</td>
+
+        <td>
+          <form class='form-product-ajax' method='POST' action="update_quantity/" class="form"> {% csrf_token %} {% csrf_token %}
+            <input type='hidden' name='cartItemId' value='{{ item.id }}' />
+            <select class="quantity" name="quantity" onchange="this.form.submit()">
+              <option value={{item.quantity}} selected> {{item.quantity}}</option>
+              {% for i in "x"|ljust:"10" %}
+              <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+              {% endfor %}
+            </select>
+          </form>
+        </td>
+        
       </tr>
       {% endfor %}
       <tr>
-        <td colspan="3"></td>
+        <td colspan="4"></td>
         <td>
           <b>Subtotal</b> ${{ cart.subtotal }}</td>
       </tr>
       <tr>
-        <td colspan="3"></td>
+        <td colspan="4"></td>
         <td>
           <b>Total</b> ${{ cart.total }}</td>
       </tr>
       <tr>
-        <td colspan="3"></td>
+        <td colspan="4"></td>
         <td>
-          <a class='btn btn-lg btn-success' href=''>Checkout</a>
+          <a class="btn btn-block btn-success" href=''>Checkout</a>
         </td>
       </tr>
     </tbody>
@@ -58,5 +70,22 @@
 
   {% else %}
   <h1 class='lead'> Your Cart is Empty</h1>
-  {% endif %} {% endblock %}
+  {% endif %}
 </div>
+
+<script>
+  //scripts are loadded after the block hence needed to add this dom listener to make sure jquery was avilable
+  document.addEventListener("DOMContentLoaded", function (event) {
+    // $('select').on('change', function () {
+    //   var itemID = this.id;
+    //   console.log(this);
+    //   $.post("update_quantity/",
+    //     {
+    //       quantity: this.value,
+    //       cartItemId: itemID,
+    //      
+    //     }
+    //   );
+    // })
+  });
+</script> {% endblock %}
