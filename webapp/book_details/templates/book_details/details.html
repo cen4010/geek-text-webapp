@@ -47,7 +47,7 @@
 					<h3 style="float:right" class="price">{{ book.price }}</h3>
 				</div>
 				<div class="row">
-					<form class='form-product-ajax' method='POST' action='/cart/add/' data-endpoint='/cart/add/' class="form"> {% csrf_token %}
+					<form method='POST' action='/cart/add/' data-endpoint='/cart/add/' class="form"> {% csrf_token %}
 						<input type='hidden' name='book_id' value='{{ book.id }}' />
 						<button type='submit' class="btn btn-block btn-success" role="button">Add to Cart</button>
 					</form>
