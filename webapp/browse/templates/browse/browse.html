@@ -22,7 +22,6 @@
                   {% render_field filter.form.author class="form-control" %}
               </li>
               <li class="fil-item">
-                   <p>For Ratings</p>
                    {{ filter.form.rating.label_tag }}
                    {% render_field filter.form.rating class="form-control" %}
               </li>
@@ -69,7 +68,28 @@
               </div>
               <div class="col-sm-12 details">
                 <div class="col-xs-6">
-                  <p class="bold">By: {{ book.author }}</p>
+                  <div class="product-author"><i>by</i> <a href="" data-toggle="modal" data-target="#authorModal{{book.id}}">{{ book.author }}</a></div>
+                  <div id="authorModal{{book.id}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h3 class="modal-title bold">{{ book.author}}</h3>
+                        </div>
+                        <div class="modal-body">
+                          <div class="row">
+                          <div class="col-sm-6">
+                            <img id="imgprotrait" src="{{ book.author.portrait.url }}"/>
+                          </div>
+                          <div class="col-sm-6" style="margin-top: 10px;">
+                            <p>{{ book.author.bio }}</p>
+                          </div>
+                        </div>
+                          <a class="btn btn-info btn-block" href="/browse?author={{ book.author.id }}">More By This Author</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-xs-6">
                   <p>{{ book.publish_date }}</p>
@@ -81,7 +101,7 @@
                   <p>{{ book.publisher }}</p>
                 </div>
                 <div class="col-xs-6">
-                  <h5>{{ book|avg_rating }}</h5>
+                  <h4>{{ book|avg_rating }}</h4>
                 </div>
                 <div class="col-xs-6">
                   <h4 class="bold">Price: Free</h4>

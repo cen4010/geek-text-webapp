@@ -34,6 +34,9 @@ class Book(models.Model):
         'Front cover of book',
         upload_to = 'book_covers/',
         null=True)
+    @property
+    def rating__avg(self):
+        return review.objects.aggregate(Avg('rating'))['rating__avg']
 
     def __str__(self):
         return '{} -- {}'.format(self.author, self.title)
@@ -46,6 +49,10 @@ class Author(models.Model):
         'Short biography of author and description of work',
         max_length=500,
         blank=True)
+    portrait = models.ImageField(
+        'Portrait of Author',
+        upload_to = 'author_portraits/',
+        null=True)
 
     def __str__(self):
         return '{}'.format(self.name)

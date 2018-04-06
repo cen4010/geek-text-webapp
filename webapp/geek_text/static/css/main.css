@@ -5,6 +5,32 @@
        padding-bottom: 0px;
        font-size: 16px;
    }
+   .btn-info {
+    background-image: -webkit-linear-gradient(top,#2d943a 0,#158223 100%);
+    background-image: -o-linear-gradient(top,#2d943a 0,#158223 100%);
+    background-image: linear-gradient(to bottom,#2d943a 0,#158223 100%);
+    background-repeat: repeat-x;
+    border-color: #3c763d;
+    margin-top: 15px;
+  }
+  .btn-info {
+    color: #fff;
+    background-color: #2d943a;
+    border-color: #3c763d;
+}
+.btn-info:hover, .btn-info:focus {
+    background-color: #1a8628;
+    background-position: 0 -15px;
+}
+.modal-title{
+ color: #158223;
+}
+   #imgprotrait{
+     display: block;
+     margin-left: auto;
+     margin-right: auto;
+     max-width: 250px;
+   }
    .list-unstyled{
     line-height: 18px;
    }
@@ -52,11 +78,14 @@
    .btn-primary:hover {
        background-color: #ececec !important;
        background-position: 0 -15px;
-       border-color: #2d943a;
+       border-color: #26632e;
    }
    .btn-primary {
-       background-color: #ececec !important;
+       background-image: linear-gradient(to bottom,#fff 0, #ececec 100%) !important;
        background-position: 0 -15px;
+    color: #26632e !important;
+    background-color: #ececec !important;
+    border-color: #26632e;
    }
    #search {
      width: 50%;
@@ -112,6 +141,9 @@
          margin: 0;
          background-color: #fff;
          border-top: solid 1px #c7c7c7;
+     }
+     authBio{
+       margin-top: 10px;
      }
    }
    @media(min-width: 769px) and (max-width: 1150px)
