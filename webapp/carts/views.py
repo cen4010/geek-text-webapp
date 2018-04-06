@@ -5,7 +5,6 @@ from book_details.models import Book
 from .models import Cart, CartItem
 
 
-
 def cart_home(request):
     print('home')
     cart_obj, new_obj = Cart.objects.new_or_get(request)
@@ -26,8 +25,8 @@ def cart_add_book(request):
     book_id = request.POST.get('book_id')
     print('this is the bookid:' + book_id)
     if book_id is not None:
-        book=Book.objects.get(book_id)
-        price=book.price
+        book = Book.objects.get(id=book_id)
+        price = float(book.price)
         add_book = CartItem.objects.create(
             quantity=quantity, book_id=book_id, price=price)
 
@@ -38,14 +37,15 @@ def cart_add_book(request):
         request.session['cart_items'] = cart_obj.cartItems.count()
     return redirect("cart:home")
 
+
 def cart_update_quantity(request):
     quantity = request.POST.get('quantity') if request.POST.get(
         'quantity') != None else 1
-    item_id= request.POST.get('cartItemId')
+    item_id = request.POST.get('cartItemId')
     item = CartItem.objects.get(id=item_id)
-    item.quantity=quantity
+    item.quantity = quantity
     item.save()
-    
+
     return redirect("cart:home")
 
 
@@ -68,4 +68,3 @@ def cart_price_update(cart):
     cart.subtotal = sub_total
     cart.total = '%.2f' % (tax*float(sub_total))
     cart.save()
-
