@@ -29,7 +29,7 @@
 			<div class="preview col-md-4">
 				<img class="img-responsive" src="{{ book.cover.url }}"/>
 			</div>
-			<div class="details col-md-6">
+			<div class="details col-md-5">
 				{{ book|avg_rating }}
 				<h5 class="product-publish"><strong>{{ book.publisher }} - <i>{{ book.publish_date }}</i></strong></h5>
 				<br/>
@@ -37,8 +37,9 @@
 				<br/>
 				<h6 class="product-genre"><i>Genre: {{ book.genre }}</i></h6>
 			</div>
-			<div class="shopping col-md-2">
-				<!-- Shopping links will go here if implemented -->
+			<div class="shopping col-md-2 col-md-offset-1">
+				<div class="row"><h3 style="float:right" class="price">{{ book.price }}</h3></div>
+				<div class="row"><a href="#" class="btn btn-block btn-success" role="button">Add to Cart</a></div>
 			</div>
 		</div>
 	</div>

@@ -49,15 +49,6 @@
      border-color: #101010;
      padding: 0;
    }
-   .btn-primary:hover {
-       background-color: #ececec !important;
-       background-position: 0 -15px;
-       border-color: #2d943a;
-   }
-   .btn-primary {
-       background-color: #ececec !important;
-       background-position: 0 -15px;
-   }
    #search {
      width: 50%;
    }

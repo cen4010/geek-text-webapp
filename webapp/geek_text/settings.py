@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'storages',
     'carts',
     'django_seed',
+    'djmoney',
     'book_details',
     'browse',
     'geek_text',
