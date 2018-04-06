@@ -1,12 +1,13 @@
-{% extends 'geek_text/base.html' %} {% load review_filters %} {% block content %} {% if book %}
+{% extends 'geek_text/base.html' %}
+{% load review_filters %}
+
+{% block content %}
+{% if book %}
 <div class="container">
 	<div class="container-fluid">
 		<div class="wrapper-row">
 			<h2 class="product-title">{{ book.title }}</h2>
-			<div class="product-author">
-				<i>by</i>
-				<a href="#" data-toggle="modal" data-target="#authorModal">{{ book.author }}</a>
-			</div>
+			<div class="product-author"><i>by</i> <a href="#" data-toggle="modal" data-target="#authorModal">{{ book.author }}</a></div>
 			<div id="authorModal" class="modal fade" role="dialog">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -26,32 +27,19 @@
 		<br/>
 		<div class="wrapper-row">
 			<div class="preview col-md-4">
-				<img class="img-responsive" src="{{ book.cover.url }}" />
+				<img class="img-responsive" src="{{ book.cover.url }}"/>
 			</div>
 			<div class="details col-md-5">
 				{{ book|avg_rating }}
-				<h5 class="product-publish">
-					<strong>{{ book.publisher }} -
-						<i>{{ book.publish_date }}</i>
-					</strong>
-				</h5>
+				<h5 class="product-publish"><strong>{{ book.publisher }} - <i>{{ book.publish_date }}</i></strong></h5>
 				<br/>
 				<p class="product-description">{{ book.description }}</p>
 				<br/>
-				<h6 class="product-genre">
-					<i>Genre: {{ book.genre }}</i>
-				</h6>
+				<h6 class="product-genre"><i>Genre: {{ book.genre }}</i></h6>
 			</div>
 			<div class="shopping col-md-2 col-md-offset-1">
-				<div class="row">
-					<h3 style="float:right" class="price">{{ book.price }}</h3>
-				</div>
-				<div class="row">
-					<form method='POST' action='/cart/add/' data-endpoint='/cart/add/' class="form"> {% csrf_token %}
-						<input type='hidden' name='book_id' value='{{ book.id }}' />
-						<button type='submit' class="btn btn-block btn-success" role="button">Add to Cart</button>
-					</form>
-				</div>
+				<div class="row"><h3 style="float:right" class="price">{{ book.price }}</h3></div>
+				<div class="row"><a href="#" class="btn btn-block btn-success" role="button">Add to Cart</a></div>
 			</div>
 		</div>
 	</div>
@@ -59,7 +47,8 @@
 
 {% else %}
 <p>This book does not exist!</p>
-{% endif %} {% if book %}
+{% endif %}
+{% if book %}
 <hr/>
 <div class="container">
 	<div class="wrapper-row">
@@ -103,25 +92,30 @@
 		{% endif %}
 		<div class="col-md-6 col-md-offset-1">
 			<h3>Reviews</h3>
-			<br/> {% if reviews|length == 0 %}
+			<br/>
+			{% if reviews|length == 0 %}
 			<h4>No reviews yet!</h4>
-			{% else %} {% for review in reviews %}
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					{% if review.anonymous %}
-					<i>Anonymous user</i>
-					{% else %} {{ review.user }} {% endif %}
-					<div class="pull-right">
-						{{ review.rating|get_stars }}
+			{% else %}
+			{% for review in reviews %}
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						{% if review.anonymous %}
+							<i>Anonymous user</i>
+						{% else %}
+							{{ review.user }}
+						{% endif %}
+						<div class="pull-right">
+							{{ review.rating|get_stars }}
+						</div>
 					</div>
+					<div class="panel-body">{{ review.comment }}</div>
 				</div>
-				<div class="panel-body">{{ review.comment }}</div>
-			</div>
-			{% endfor %} {% endif %}
+			{% endfor %}
+			{% endif %}
 		</div>
 	</div>
-	{% else %}
+{% else %}
 	<p>No reviews for a non-existent book!</p>
-	{% endif %}
+{% endif %}
 </div>
 {% endblock content %}
