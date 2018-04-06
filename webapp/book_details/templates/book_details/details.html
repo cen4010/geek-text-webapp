@@ -27,7 +27,7 @@
 		<br/>
 		<div class="wrapper-row">
 			<div class="preview col-md-4">
-				<img class="img-responsive" src="{{ book.cover.url }}"/>
+				<img id="book_cover" class="img-responsive" src="{{ book.cover.url }}"/>
 			</div>
 			<div class="details col-md-5">
 				<div class="rating">{{ book|avg_rating }}</div>
@@ -118,4 +118,9 @@
 	<p>No reviews for a non-existent book!</p>
 {% endif %}
 </div>
+<script>
+	function loadFunc() {
+		$('#book_cover').elevateZoom()
+	}
+</script>
 {% endblock content %}
