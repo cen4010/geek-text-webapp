@@ -22,6 +22,7 @@ from .views import signup
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^registration/$', signup, name='signup'),
     url(r'^browse/', include('browse.urls', namespace='browse')),
     url(r'^books/', include('book_details.urls', namespace='books')),
