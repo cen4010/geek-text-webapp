@@ -224,3 +224,18 @@
      margin: 10px 20px 5px;
    }
    }
+   .rating {
+      position: relative;
+      display: inline-block;
+   }
+   .empty-stars {
+      color: #bbb;
+   }
+   .full-stars {
+      position: absolute;
+      left: 0;
+      top: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      color: #fa0;
+   }

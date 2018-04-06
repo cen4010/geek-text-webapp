@@ -30,7 +30,7 @@
 				<img class="img-responsive" src="{{ book.cover.url }}"/>
 			</div>
 			<div class="details col-md-5">
-				<div class="rating">{{ book|avg_rating }}</div>
+				{{ book|avg_rating }}
 				<h5 class="product-publish"><strong>{{ book.publisher }} - <i>{{ book.publish_date }}</i></strong></h5>
 				<br/>
 				<p class="product-description">{{ book.description }}</p>
