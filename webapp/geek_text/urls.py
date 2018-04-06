@@ -17,12 +17,13 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from .views import signup
+from .views import signup, change_password
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     url(r'^registration/$', signup, name='signup'),
+    url(r'^change-password/$', change_password, name='change_password'),
     url(r'^browse/', include('browse.urls', namespace='browse')),
     url(r'^books/', include('book_details.urls', namespace='books')),
     url(r'^cart/', include("carts.urls", namespace='cart'))
