@@ -1,0 +1,19 @@
+{% extends 'geek_text/base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+
+{% block content %}
+<div class="container" >
+    <h1></h1>
+    <form method="POST">
+        {{ crsf_token }}
+        <p>Username: {{ user.username }}</p>
+        <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Birth Date: {{ profile.birth_date}}</p>
+        <p>City: {{ profile.city }}</p>
+        <p>Phone: {{ profile.phone }}</p>
+    </form>
+</div>
+{% endblock %}

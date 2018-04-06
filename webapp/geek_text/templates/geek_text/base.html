@@ -40,7 +40,11 @@
 				 </li>
 				 <ul class="nav navbar-nav navbar-right">
 					 <li class="nav-item" ><a href="#"><h4 id="navlinks"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Account</h4></a></li>
-					 <li class="nav-item" ><a href="/login"><h4 id="navlinks"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login</h4></a></li>
+					 {% if user.is_authenticated %}
+						 <li class="nav-item" ><a href="{% url 'logout' %}"><h4 id="navlinks"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Logout</h4></a></li>
+					 {% else %}
+					 	<li class="nav-item" ><a href="{% url 'login' %}"><h4 id="navlinks"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login</h4></a></li>
+					 {% endif %}
 					 <li class="nav-item" ><a href="#"><h4 id="navlinks"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;Cart</h4></a></li>
 				 </ul>
 			 </div>
