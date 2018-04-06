@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from djmoney.models.fields import MoneyField
+from djmoney.money import Money
 
 # Using direct User model due to issues with Seeder
 from django.contrib.auth.models import User
@@ -18,6 +20,12 @@ class Book(models.Model):
         'Description of book contents and misc info',
         max_length=500,
         blank=True)
+    price = MoneyField(
+        'Price',
+        max_digits=20,
+        decimal_places=2,
+        default_currency='USD',
+        default=Money(0, 'USD'))
     genre = models.ForeignKey(
         'Genre',
         related_name='books',
