@@ -1,6 +1,9 @@
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from django.shortcuts import render, redirect
-from .forms import SignUpForm
+from .forms import SignUpForm, UserForm, ProfileForm
+
 
 def signup(request):
     if request.method == 'POST':
@@ -19,3 +22,10 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
+@login_required
+@transaction.atomic
+def profile(request):
+    user_form = UserForm(instance=request.user)
+    profile_form = ProfileForm(instance=request.user.profile)
+    args = {'user_form': user_form, 'profile_form': profile_form }
+    return render(request, 'accounts/profile.html', args)
