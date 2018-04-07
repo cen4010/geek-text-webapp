@@ -141,6 +141,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+LOGOUT_REDIRECT_URL = '/browse'
 
 BACKEND = os.environ.get('DJANGO_BACKEND', 'local')
 

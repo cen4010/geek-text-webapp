@@ -1,0 +1,16 @@
+{% extends 'geek_text/base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+
+{% block content %}
+<div class="container" >
+    <h1></h1>
+    <form method="POST">
+        {{ crsf_token }}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+    </form>
+</div>
+{% endblock %}
+
