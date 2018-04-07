@@ -35,7 +35,7 @@ def profile(request):
 
 @login_required
 def edit_profile(request):
-    print("FIX ME!!")
+
     if request.method == 'POST':
         user_form = EditUserForm(request.POST, instace=request.user)
         profile_form = EditProfileForm(request.POST, instance=request.user.profile)
