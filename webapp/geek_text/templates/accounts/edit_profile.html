@@ -1,0 +1,13 @@
+{% extends 'geek_text/base.html' %}
+
+{% block head %} <h1>Edit Profile</h1> {% endblock %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+
+    <input type="button" class="btn btn-info" value="Update Button" onclick="location.href = '{% url 'profile' %}';">
+</form>
+{% endblock %}
