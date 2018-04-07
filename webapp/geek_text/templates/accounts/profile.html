@@ -8,8 +8,8 @@
     <h1></h1>
     <form method="POST">
         {{ crsf_token }}
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
+        {{ user.as_p }}
+        {{ profile.as_p }}
     </form>
 </div>
 {% endblock %}
