@@ -21,21 +21,31 @@ def cart_checkout(request):
 
 
 def cart_add_book(request):
-    price = 10.00
     quantity = request.POST.get('quantity') if request.POST.get(
         'quantity') != None else 1
     book_id = request.POST.get('book_id')
-    book_added_price = float(quantity) * price
     print('this is the bookid:' + book_id)
     if book_id is not None:
+        book=Book.objects.get(book_id)
+        price=book.price
         add_book = CartItem.objects.create(
-            quantity=quantity, book_id=book_id, price=price, book_price_quantity=book_added_price)
-        print('this is the add_book:' + str(add_book.id))
+            quantity=quantity, book_id=book_id, price=price)
+
         add_book.save()
         cart_obj, new_obj = Cart.objects.new_or_get(request)
         cart_obj.cartItems.add(add_book)
         #updates the session variable for the icon to change on the navbar
         request.session['cart_items'] = cart_obj.cartItems.count()
+    return redirect("cart:home")
+
+def cart_update_quantity(request):
+    quantity = request.POST.get('quantity') if request.POST.get(
+        'quantity') != None else 1
+    item_id= request.POST.get('cartItemId')
+    item = CartItem.objects.get(id=item_id)
+    item.quantity=quantity
+    item.save()
+    
     return redirect("cart:home")
 
 
