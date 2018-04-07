@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'book_details',
     'browse',
     'geek_text',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
