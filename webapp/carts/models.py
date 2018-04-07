@@ -7,7 +7,6 @@ User = settings.AUTH_USER_MODEL
 
 # cart manager is used to create new carts based on session and user information https://docs.djangoproject.com/en/2.0/topics/db/managers/
 
-
 class CartsManager(models.Manager):
     def new_or_get(self, request):
         cart_id = request.session.get("cart_id", None)
@@ -53,21 +52,14 @@ class CartItem(models.Model):
         'quantity of books',
         default=1)
     price = models.DecimalField(
-        'Temp: Price of book',
+        'Price of book',
         max_digits=6,
-        decimal_places=2,
-        blank=True,
-        null=True)
-    book_price_quantity = models.DecimalField(
-        'Price of Line Item: BookPricexQuantity',
-        max_digits=8,
         decimal_places=2,
         blank=True,
         null=True)
 
     def __str__(self):
         return str(self.id)
-
 
 
 #Tied the cart to the user for persistance for when a user signs in they want to acess their cart.
@@ -96,6 +88,51 @@ class Cart(models.Model):
         'Time of Cart Creation',
         auto_now_add=True)
     objects = CartsManager()
+
+    def __str__(self):
+        return str(self.id)
+
+
+class OrderItem(models.Model):
+    book = models.ForeignKey(
+        Book,
+        related_name='purchaed_book')
+    quantity = models.IntegerField(
+        'quantity of books',
+        default=1)
+    price = models.DecimalField(
+        'Price of book',
+        max_digits=6,
+        decimal_places=2,
+        blank=True,
+        null=True)
+    book_price_quantity = models.DecimalField(
+        'Price of Line Item: BookPrice*Quantity',
+        max_digits=8,
+        decimal_places=2,
+        blank=True,
+        null=True)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class Order(models.Model):
+    user = models.ForeignKey(
+        User,
+        null=True,
+        blank=True)
+    orderItems = models.ManyToManyField(
+        OrderItem,
+        blank=True)
+    subtotal = models.DecimalField(
+        default=0.00,
+        max_digits=10,
+        decimal_places=2)
+    total = models.DecimalField(
+        default=0.00,
+        max_digits=10,
+        decimal_places=2)
 
     def __str__(self):
         return str(self.id)

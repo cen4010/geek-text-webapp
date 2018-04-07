@@ -40,8 +40,14 @@
 				 </li>
 				 <ul class="nav navbar-nav navbar-right">
 					 <li class="nav-item" ><a href="#"><h4 id="navlinks"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Account</h4></a></li>
-					 <li class="nav-item" ><a href="/login"><h4 id="navlinks"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login</h4></a></li>
-					 <li class="nav-item" ><a href="#"><h4 id="navlinks"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;Cart</h4></a></li>
+
+					 {% if user.is_authenticated %}
+					 	<li class="nav-item" ><a href="{% url 'logout' %}"><h4 id="navlinks"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Logout</h4></a></li>
+					 {% else %}
+					 	<li class="nav-item" ><a href="{% url 'login' %}"><h4 id="navlinks"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login</h4></a></li>
+					 {% endif %}
+					 <li class="nav-item" ><a href="/cart"><h4 id="navlinks"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;Cart</h4></a></li>
+
 				 </ul>
 			 </div>
 		 </div>
@@ -50,13 +56,14 @@
 	 {% block head %}
 	 {% endblock head %}
  </head>
- <body>
+ <body onload="loadFunc()">
 	 {% block content %}
 	 {% endblock content %}
 	 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	 <script>window.jQuery || document.write('<script src="{% static "js/vendor/jquery-1.11.2.min.js" %}"><\/script>')</script>
 
 	 <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+	 <script src="{% static 'js/vendor/jquery.elevateZoom-3.0.8.min.js' %}"></script>
 
 	 <script src="{% static 'js/main.js' %}"></script>
  </body>
