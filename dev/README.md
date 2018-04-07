@@ -85,6 +85,12 @@ export DB_HOST=localhost
 export DB_PORT=3306
 ```
 
+MySQL database must be created using UTF-8 in order to work with Django:
+
+```sql
+CREATE DATABASE db_name CHARACTER SET utf8;
+```
+
 ### Seed Database
 
 During local testing, it may be useful to have a good amount of data to
