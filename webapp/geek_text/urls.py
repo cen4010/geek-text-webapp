@@ -17,7 +17,8 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from .views import signup, change_password
+from .views import signup, profile, update_profile, edit_profile, change_password
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
