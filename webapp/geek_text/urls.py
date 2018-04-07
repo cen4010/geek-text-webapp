@@ -23,6 +23,7 @@ from .views import signup, profile, update_profile, edit_profile, change_passwor
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^registration/$', signup, name='signup'),
     url(r'^change-password/$', change_password, name='change_password'),
     url(r'^browse/', include('browse.urls', namespace='browse')),
