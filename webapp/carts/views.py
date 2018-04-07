@@ -44,9 +44,7 @@ def cart_add_book(request):
     print('this is the bookid:' + book_id)
     if book_id is not None:
         book = Book.objects.get(id=book_id)
-        price = float(book.price)
-        book=Book.objects.get(book_id)
-        price=book.price
+        price = float(book.price.amount)
         add_book = CartItem.objects.create(
             quantity=quantity, book_id=book_id, price=price)
 
@@ -64,7 +62,7 @@ def cart_update_quantity(request):
     item = CartItem.objects.get(id=item_id)
     item.quantity=quantity
     item.save()
-    
+
     return redirect("cart:home")
 
 
