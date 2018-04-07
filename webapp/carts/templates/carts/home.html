@@ -62,7 +62,9 @@
       <tr>
         <td colspan="4"></td>
         <td>
-          <a class="btn btn-block btn-success" href=''>Checkout</a>
+            <form method='GET' action='/cart/checkout/' data-endpoint='/cart/checkout/' class="form"> {% csrf_token %}
+              <button type='submit' class="btn btn-block btn-success" role="button">Checkout</button>
+            </form>
         </td>
       </tr>
     </tbody>

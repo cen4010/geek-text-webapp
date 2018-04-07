@@ -1,23 +1,40 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
 from django.contrib import messages
 from book_details.models import Book
-from .models import Cart, CartItem
-
+from .models import Cart, CartItem, OrderItem, Order
 
 
 def cart_home(request):
-    print('home')
     cart_obj, new_obj = Cart.objects.new_or_get(request)
     cart_price_update(cart_obj)
     return render(request, "carts/home.html", {"cart": cart_obj})
 
 
-def cart_checkout(request):
-    print('todo')
+def cart_checkout_home(request):
+     return render(request, "carts/checkout.html")
 
-# used to add books to the from the cart will
-#price is hard coded until definition of price is added
+
+def cart_checkout(request):
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
+    all_cartItems = cart_obj.cartItems.all()
+    order = Order.objects.create()
+
+    for item in all_cartItems:
+        line_item = item.price*item.quantity
+        add_order_item = OrderItem.objects.create(
+            quantity=item.quantity, book_id=item.book.id,
+            price=item.price, book_price_quantity=line_item
+        )
+        add_order_item.save()
+        order.orderItems.add(add_order_item)
+        cart_obj.cartItems.remove(item)
+
+    order.subtotal = cart_obj.subtotal
+    order.total = cart_obj.total
+    order.user = cart_obj.user
+    order.save()
+
+    return redirect("cart:checkout_home")
 
 
 def cart_add_book(request):
@@ -26,6 +43,8 @@ def cart_add_book(request):
     book_id = request.POST.get('book_id')
     print('this is the bookid:' + book_id)
     if book_id is not None:
+        book = Book.objects.get(id=book_id)
+        price = float(book.price)
         book=Book.objects.get(book_id)
         price=book.price
         add_book = CartItem.objects.create(
@@ -49,6 +68,17 @@ def cart_update_quantity(request):
     return redirect("cart:home")
 
 
+def cart_update_quantity(request):
+    quantity = request.POST.get('quantity') if request.POST.get(
+        'quantity') != None else 1
+    item_id = request.POST.get('cartItemId')
+    item = CartItem.objects.get(id=item_id)
+    item.quantity = quantity
+    item.save()
+
+    return redirect("cart:home")
+
+
 def cart_remove_book(request):
     cart_item_id = request.POST.get('item_id')
     if cart_item_id is not None:
@@ -68,4 +98,3 @@ def cart_price_update(cart):
     cart.subtotal = sub_total
     cart.total = '%.2f' % (tax*float(sub_total))
     cart.save()
-
