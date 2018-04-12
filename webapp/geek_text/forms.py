@@ -4,17 +4,18 @@ from django.contrib.auth.models import User
 from .models import Profile
 
 
-class SignUpForm(UserCreationForm):
+class SignUpUserForm(UserCreationForm):
     birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
-    phone = forms.IntegerField()
     city = forms.CharField(max_length=100)
+    phone = forms.IntegerField()
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name', 'birth_date', 'city', 'phone')
+        fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name',
+                  'birth_date', 'city', 'phone')
 
     def save(self, commit=True):
-        user = super(SignUpForm, self).save(commit=False)
+        user = super(SignUpUserForm, self).save(commit=False)
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         user.email = self.cleaned_data['email']
@@ -24,27 +25,28 @@ class SignUpForm(UserCreationForm):
 
         return user
 
-
-class UserForm(forms.ModelForm):
+class UserViewForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name')
+        fields = ('first_name', 'last_name', 'email',)
 
-class ProfileForm(forms.ModelForm):
+class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('birth_date' , 'phone' , 'city')
+        fields = (
+            'birth_date',
+            'city',
+            'phone'
+        )
 
-
-class EditUserForm(UserChangeForm):
-    template_name='/something/else'
-
+class EditForm(UserChangeForm):
     class Meta:
         model = User
         fields = (
-            'email',
             'first_name',
             'last_name',
+            'email',
+            'password'
         )
 
 class EditProfileForm(UserChangeForm):

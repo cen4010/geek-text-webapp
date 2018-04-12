@@ -1,57 +1,62 @@
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
 from django.db import transaction
 from django.shortcuts import render, redirect
-from .forms import SignUpForm, EditProfileForm, EditUserForm
+from .forms import SignUpUserForm, UserProfileForm, UserViewForm, EditProfileForm, EditForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.urls import reverse
-from .forms import UserForm, ProfileForm
+
 
 def signup(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
+        user_form = SignUpUserForm(request.POST)
+
+        if user_form.is_valid():
+            user = user_form.save()
             user.refresh_from_db()  # load the profile instance created by the signal
-            user.profile.birth_date = form.cleaned_data.get('birth_date')
+
+            user.profile.birth_date = user_form.cleaned_data.get('birth_date')
+            user.profile.city = user_form.cleaned_data.get('city')
+            user.profile.phone = user_form.cleaned_data.get('phone')
+
+            user.profile.save()
             user.save()
-            raw_password = form.cleaned_data.get('password1')
+            raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
             return redirect('login')
     else:
-        form = SignUpForm()
-    return render(request, 'registration/signup.html', {'form': form})
+        user_form = SignUpUserForm()
+    return render(request, 'registration/signup.html', {'user': user_form})
+
+@login_required
+def profile(request):
+    user_form = UserViewForm(instance= request.user)
+    profile_form = UserProfileForm(instance= request.user.profile)
+    args = {'user': user_form, 'profile': profile_form}
+    return render(request, 'accounts/profile.html', args)
+
 
 @login_required
 @transaction.atomic
-def profile(request):
-    user_form = UserForm(instance=request.user)
-    profile_form = ProfileForm(instance=request.user.profile)
-
-    return render(request, 'accounts/profile.html',
-                  {'user': user_form , 'profile': profile_form } )
-
-@login_required
 def edit_profile(request):
-
     if request.method == 'POST':
-        user_form = EditUserForm(request.POST, instace=request.user)
+        user_form = EditForm(request.POST, instance=request.user)
         profile_form = EditProfileForm(request.POST, instance=request.user.profile)
 
         if user_form.is_valid() or profile_form.is_valid():
-            profile_form.save()
             user_form.save()
-            return redirect(reverse('settings:profile'))
+            profile_form.save()
+            messages.success(request, _('Your profile was successfully updated!'))
+            return redirect(reverse('view_profile'))
+        else:
+            messages.error(request, _('Please correct the error below.'))
     else:
-        user_form = EditUserForm(instance=request.user)
+        user_form = EditForm(request.POST, instance=request.user)
         profile_form = EditProfileForm(instance=request.user.profile)
 
-        args = { 'user': user_form, 'profile': profile_form}
+        args = {'user': user_form, 'profile': profile_form }
         return render(request, 'accounts/edit_profile.html', args)
-
-
 
 @login_required
 def change_password(request):
@@ -68,3 +73,4 @@ def change_password(request):
         form = PasswordChangeForm(user=request.user)
         args = {'form': form}
         return render(request, 'accounts/change_password.html', args)
+

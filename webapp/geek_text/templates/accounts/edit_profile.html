@@ -7,7 +7,6 @@
     {% csrf_token %}
     {{ user.as_p }}
     {{ profile.as_p }}
-
-    <input type="button" class="btn btn-info" value="Update Button" onclick="location.href = '{% url 'profile' %}';">
+    <button type="submit">Save changes</button>
 </form>
 {% endblock %}
