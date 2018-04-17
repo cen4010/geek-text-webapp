@@ -3,10 +3,10 @@ import dj_database_url
 
 ENVIRONMENT = 'prod'
 DEBUG = False
-ALLOWED_HOSTS = ['']
+ALLOWED_HOSTS = ['.herokuapp.com', '*', 'geek-text.herokuapp.com']
 SECRET_KEY = os.environ.get('SECRET_KEY', 'MISSING SECRET_KEY')
 
-print(os.environ.get('DATABASE_URL', 'foooo DATABASE_URL'))
+#print(os.environ.get('DATABASE_URL', 'foooo DATABASE_URL'))
 
 # CI Hooks
 USER = os.environ.get('USER', os.environ.get('USERNAME', 'ANON-DEV'))
@@ -17,11 +17,8 @@ if os.environ.get('CI', 'false') == 'true':
         CI_ENV = 'geek-text'
 
 # Database
-DATABASES['default'] = {
-        dj_database_url.config(
-            default=os.environ.get('DATABASE_URL', 'MISSING DATABASE_URL')
-        )
-}
+DATABASES['default'] = dj_database_url.config(
+            default=os.environ.get('DATABASE_URL', 'MISSING DATABASE_URL'))
 
 # Storage
 STATICFILES_STORAGE = 'custom_storages.StaticStorage'
