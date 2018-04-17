@@ -1,20 +1,19 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from book_details.models import Book, Author, Publisher, Genre
+from book_details.models import Book, Author, Publisher, Genre, Review
 from django.views.generic import ListView
 from .filters import bookFilter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from . import filters
+from django.db.models import Avg
 
 # Create your views here.
 def browse(request):
 
-    qs = Book.objects.all()
+    qs = Book.objects.annotate(avg_rating=Avg('reviews__rating')).order_by('-avg_rating')
 
     filtered = bookFilter(request.GET, queryset=qs)
     qs = filtered.qs
-
-    #rateFilter = ratingFilter(request.GET, queryset=Book.objects.all())
 
 
     #How many results does the user want to see?

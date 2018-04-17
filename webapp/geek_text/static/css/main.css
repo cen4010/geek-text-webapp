@@ -5,6 +5,9 @@
        padding-bottom: 0px;
        font-size: 16px;
    }
+   label{
+     font-size: 15px;
+   }
    .btn-info {
     background-image: -webkit-linear-gradient(top,#2d943a 0,#158223 100%);
     background-image: -o-linear-gradient(top,#2d943a 0,#158223 100%);
