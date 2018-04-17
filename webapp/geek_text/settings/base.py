@@ -15,14 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# CI Hooks
-USER = os.environ.get('USER', os.environ.get('USERNAME', 'ANON-DEV'))
-CI_ENV = 'dev/' + USER
-if os.environ.get('CI', 'false') == 'true':
-    CI_ENV = 'ci/' + os.environ.get('CI_COMMIT', 'HASHLESS')
-    if os.environ.get('TRAVIS_BRANCH', 'nil') == 'master':
-        CI_ENV = 'geek-text'
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -30,7 +22,6 @@ if os.environ.get('CI', 'false') == 'true':
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'npualj(-7_a0%4o^cs1_=s+!5i9(7eh$%*c5c!bi9_#5q335!@'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -91,30 +82,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'geek_text.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
-DB_BACKEND = os.environ.get('DB_BACKEND', 'sqlite')
-
-if DB_BACKEND == 'mysql':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ.get('DB_NAME', 'MISSING DATABASE NAME'),
-            'USER': os.environ.get('DB_USER', 'MISSING DATABASE USER'),
-            'PASSWORD': os.environ.get('DB_PASSWORD', 'MISSING DATABASE PASSWORD'),
-            'HOST': os.environ.get('DB_HOST', 'MISSING DATABASE HOST'),
-            'PORT': os.environ.get('DB_PORT', 'MISSING DATABASE PORT'),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
+}
 
 
 # Password validation
@@ -156,26 +129,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 LOGOUT_REDIRECT_URL = '/browse'
-
-BACKEND = os.environ.get('DJANGO_BACKEND', 'local')
-
-if BACKEND == 'amazon':
-    # Storage
-    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-    STATICFILES_LOCATION = 'static/%s' % CI_ENV
-    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
-    MEDIAFILES_LOCATION = 'media/%s' % CI_ENV
-
-    # AWS Auth
-    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_ID', 'MISSING AWS ACCESS ID')
-    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_KEY', 'MISSING AWS SECRET KEY')
-
-    # AWS S3 Config
-    AWS_S3_REGION_NAME = 'us-east-1'
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_S3_BUCKET', 'MISSING AWS S3 BUCKET')
-    AWS_S3_OBJECT_PARAMETERS = {
-        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-        'CacheControl': 'max-age=94608000',
-    }
-    ## AWS Bucket URL
-    AWS_S3_CUSTOM_DOMAIN = 's3.amazonaws.com/%s' % AWS_STORAGE_BUCKET_NAME
