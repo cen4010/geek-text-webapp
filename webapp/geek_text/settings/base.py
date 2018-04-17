@@ -129,3 +129,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 LOGOUT_REDIRECT_URL = '/browse'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
