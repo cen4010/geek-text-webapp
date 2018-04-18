@@ -5,12 +5,12 @@ from django.views.generic import ListView
 from .filters import bookFilter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from . import filters
-from django.db.models import Avg
+from django.db.models import Avg, Sum
 
 # Create your views here.
 def browse(request):
 
-    qs = Book.objects.annotate(avg_rating=Avg('reviews__rating')).order_by('-avg_rating')
+    qs = Book.objects.annotate(top_seller = Sum('purchaed_book__quantity')).order_by('-top_seller')
 
     filtered = bookFilter(request.GET, queryset=qs)
     qs = filtered.qs
