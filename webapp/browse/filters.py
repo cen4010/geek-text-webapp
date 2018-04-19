@@ -1,7 +1,8 @@
 from book_details.models import Book, Author, Publisher, Genre, Review
+from carts.models import OrderItem
 import django_filters
 from django_filters import OrderingFilter
-from django.db.models import Avg
+from django.db.models import Avg, Sum
 from django.db.models.query import QuerySet
 
 class CustomOrderingFilter(django_filters.OrderingFilter):
@@ -11,6 +12,7 @@ class CustomOrderingFilter(django_filters.OrderingFilter):
         self.extra['choices'] += [
             ('avgRating', 'Lowest Rated'),
             ('-avgRating', 'Highest Rated'),
+            ('topSeller', 'Top Sellers'),
         ]
 
     def avgRating(self,queryset,value):
@@ -19,12 +21,16 @@ class CustomOrderingFilter(django_filters.OrderingFilter):
     def filter(self, qs, value):
         # OrderingFilter is CSV-based, so `value` is a list
         if any(v in ['avgRating'] for v in value):
-            # sort queryset by relevance
+            # sort queryset by rating
             return qs.annotate(avg_rating = Avg('reviews__rating')).order_by('avg_rating')
 
         if any(v in ['-avgRating'] for v in value):
-            # sort queryset by relevance
+            # sort queryset by rating
             return qs.annotate(avg_rating = Avg('reviews__rating')).order_by('-avg_rating')
+
+        if any(v in ['topSeller'] for v in value):
+            # sort queryset by topSeller
+            return qs.annotate(top_seller = Sum('purchaed_book__quantity')).order_by('-top_seller')
 
         return super(CustomOrderingFilter, self).filter(qs, value)
 
@@ -51,8 +57,8 @@ class bookFilter(django_filters.FilterSet):
         fields=(
             ('title', 'Book Title'),
             ('author', 'Author'),
+            ('price', 'Price'),
             ('publish_date', 'Release Date'),
-            #('avg', 'Average Rating'),
         ),
     )
 
