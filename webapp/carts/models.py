@@ -114,7 +114,7 @@ class OrderItem(models.Model):
         null=True)
 
     def __str__(self):
-        return str(self.id)
+        return '{} -- {} -- {}'.format(self.id, self.book, self.quantity)
 
 
 class Order(models.Model):
