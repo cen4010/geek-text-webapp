@@ -60,6 +60,37 @@ export AWS_SECRET_KEY={secret-key-here}
 export AWS_S3_BUCKET=geek-text-resources
 ```
 
+### MySQL Database
+
+An externally-hosted MySQL (or MariaDB) database can be used instead of Django's built-in SQLite3 database.
+Similar to the AWS bucket configuration, the following environment variables must be set:
+
+| Variable | Description |
+| --- | --- |
+| `DB_BACKEND` | Which database backend to use. `mysql` or `sqlite` |
+| `DB_NAME` | Name of database in the MySQL server |
+| `DB_USER` | Username for MySQL server |
+| `DB_PASSWORD` | Password for MySQL server |
+| `DB_HOST` | Hostname for the MySQL server. Should be `localhost` if hosted on the same machine |
+| `DB_HOST` | Port number for the MySQL server. `3306` is the default MySQL port |
+
+Example `source` script:
+
+```bash
+export DB_BACKEND=mysql
+export DB_NAME=geek_text
+export DB_USER=username
+export DB_PASSWORD=password
+export DB_HOST=localhost
+export DB_PORT=3306
+```
+
+MySQL database must be created using UTF-8 in order to work with Django:
+
+```sql
+CREATE DATABASE db_name CHARACTER SET utf8;
+```
+
 ### Seed Database
 
 During local testing, it may be useful to have a good amount of data to
