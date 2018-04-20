@@ -7,6 +7,8 @@ _Book shopping site, with the right geek cred_
 
 ## Deploying
 
+### Native
+
 To try out the webapp on your own, clone this repo and run the following:
 
 ```bash
@@ -22,6 +24,24 @@ python manage.py runserver
 ```
 
 More extensive information can be found in our [dev docs](dev/README.md).
+
+### Docker-Compose
+
+The project is set up so that the service can be run locally using
+[Docker-Compose](https://docs.docker.com/compose/). Before running,
+the required environment variables (see the [dev docs](dev/README.md))
+must be active. A sample run is shown below:
+
+```bash
+# Setup Envirnoment
+cp envfile.sample envfile
+vim envfile # Fill in the variables listed in the file
+source envfile
+
+# Run Services
+docker-compose build
+docker-compose up
+```
 
 ## Team
 
