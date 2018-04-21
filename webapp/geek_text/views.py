@@ -2,7 +2,9 @@ from django.contrib.auth import login, logout, authenticate, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import render, redirect
-from .forms import SignUpUserForm, SignUpProfileForm, UserProfileForm, UserViewForm, EditProfileForm, EditForm, AddressForm
+from .forms import (
+    SignUpUserForm, SignUpProfileForm, UserProfileForm, UserViewForm,
+    EditProfileForm, EditForm, AddressForm, CreditCardForm,)
 from django.contrib.auth.forms import PasswordChangeForm
 from django.urls import reverse
 
@@ -34,8 +36,19 @@ def signup(request):
                 address.city = address_form.cleaned_data.get('city')
                 address.zipcodezipcode = address_form.cleaned_data.get('zipcode')
 
-                print(address.address)
                 address.save()
+
+            creditcard_form = CreditCardForm(request.POST)
+            if creditcard_form.is_valid():
+                creditcard = creditcard_form.save(commit=False)
+                creditcard.user = user.profile.user
+
+                creditcard.card_name = creditcard_form.cleaned_data.get('card_name')
+                creditcard.card_number = creditcard_form.cleaned_data.get('card_number')
+                creditcard.card_expirydate = creditcard_form.cleaned_data.get('card_expirydate')
+                creditcard.card_ccv = creditcard_form.cleaned_data.get('card_ccv')
+
+                creditcard.save()
 
             raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
@@ -45,9 +58,11 @@ def signup(request):
         user_form = SignUpUserForm()
         profile_form = SignUpProfileForm()
         address_form = AddressForm()
+        creditcard_form = CreditCardForm()
+
     return render(request, 'registration/signup.html',
               {'user': user_form, 'profile': profile_form,
-               'address': address_form})
+               'address': address_form, 'creditcard': creditcard_form})
 
 
 @login_required

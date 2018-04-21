@@ -36,4 +36,10 @@ class Address(models.Model):
     def __str__(self):
         return self.user.username
 
-
+class CreditCard(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name="creditcard")
+    card_name = models.CharField(max_length=36, default='')
+    card_number = models.CharField(max_length=26, default='')
+    card_expirydate = models.DateField(null=True, blank=True)
+    card_ccv = models.CharField(max_length=3, default='')

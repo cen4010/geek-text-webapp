@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
-from .models import Profile, Address
+from .models import Profile, Address, CreditCard
 from localflavor.us.forms import USStateSelect, USZipCodeField
 from django.forms import inlineformset_factory
 
@@ -64,6 +64,28 @@ class AddressForm(forms.ModelForm):
 
         return address
 
+class CreditCardForm(forms.ModelForm):
+    card_name = forms.CharField(max_length=36)
+    card_number = forms.CharField(max_length=26)
+    card_expirydate = forms.DateField()
+    card_ccv = forms.CharField(max_length=3)
+
+    class Meta:
+        model = CreditCard
+        fields = ('card_name', 'card_number', 'card_expirydate', 'card_ccv')
+        exclude = ('user',)
+
+    def save(self, commit=True):
+        creditcard = super().save(commit=False)
+        creditcard.card_name = self.cleaned_data.get('card_name')
+        creditcard.card_number = self.cleaned_data.get('card_number')
+        creditcard.card_expirydate = self.cleaned_data.get('card_expirydate')
+        creditcard.card_ccv = self.cleaned_data.get('card_ccv')
+
+        if commit:
+            creditcard.save()
+
+        return creditcard
 
 
 class UserViewForm(forms.ModelForm):
