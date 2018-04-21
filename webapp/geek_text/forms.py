@@ -1,18 +1,14 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
-from .models import Profile
-
+from .models import Profile, Address
+from localflavor.us.forms import USStateSelect, USZipCodeField
+from django.forms import inlineformset_factory
 
 class SignUpUserForm(UserCreationForm):
-    birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
-    city = forms.CharField(max_length=100)
-    phone = forms.IntegerField()
-
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name',
-                  'birth_date', 'city', 'phone')
+        fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name',)
 
     def save(self, commit=True):
         user = super(SignUpUserForm, self).save(commit=False)
@@ -25,6 +21,51 @@ class SignUpUserForm(UserCreationForm):
 
         return user
 
+class SignUpProfileForm(forms.ModelForm):
+    birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
+    phone = forms.CharField(max_length=16)
+
+    class Meta:
+        model = Profile
+        fields = ('birth_date', 'phone',)
+        exclude = ('user',)
+
+    def save(self, commit=True):
+        profile = super(SignUpProfileForm, self).save(commit=False)
+        profile.birth_date = self.cleaned_data['birth_date']
+        profile.phone = self.cleaned_data['phone']
+
+        if commit:
+            profile.save()
+
+        return profile
+
+
+class AddressForm(forms.ModelForm):
+    address = forms.CharField(max_length=20, required=True)
+    state = USStateSelect()
+    city = forms.CharField(max_length=20)
+    zipcode = USZipCodeField()
+
+    class Meta:
+        model = Address
+        fields = ('address', 'state', 'city', 'zipcode')
+        exclude = ('user',)
+
+    def save(self, commit=True):
+        address = super().save(commit=False)
+        address.address = self.cleaned_data.get('address')
+        address.state = self.cleaned_data.get('state')
+        address.city = self.cleaned_data.get('city')
+        address.zipcode = self.cleaned_data.get('zipcode')
+
+        if commit:
+            address.save()
+
+        return address
+
+
+
 class UserViewForm(forms.ModelForm):
     class Meta:
         model = User
@@ -35,7 +76,6 @@ class UserProfileForm(forms.ModelForm):
         model = Profile
         fields = (
             'birth_date',
-            'city',
             'phone'
         )
 
@@ -54,6 +94,5 @@ class EditProfileForm(UserChangeForm):
         model = Profile
         fields = (
             'birth_date',
-            'city',
             'phone'
         )

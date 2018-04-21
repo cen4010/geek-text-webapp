@@ -1,33 +1,54 @@
-from django.contrib.auth import login, authenticate, update_session_auth_hash
+from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import render, redirect
-from .forms import SignUpUserForm, UserProfileForm, UserViewForm, EditProfileForm, EditForm
+from .forms import SignUpUserForm, SignUpProfileForm, UserProfileForm, UserViewForm, EditProfileForm, EditForm, AddressForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.urls import reverse
-
 
 def signup(request):
     if request.method == 'POST':
         user_form = SignUpUserForm(request.POST)
+        profile_form = SignUpProfileForm(request.POST)
 
-        if user_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
-            user.refresh_from_db()  # load the profile instance created by the signal
+            user.refresh_from_db()
 
-            user.profile.birth_date = user_form.cleaned_data.get('birth_date')
-            user.profile.city = user_form.cleaned_data.get('city')
-            user.profile.phone = user_form.cleaned_data.get('phone')
+            profile = profile_form.save(commit=False)
 
+            #Clean Profile
+            user.profile.birth_date = profile_form.cleaned_data.get('birth_date')
+            user.profile.phone = profile_form.cleaned_data.get('phone')
             user.profile.save()
-            user.save()
+
+
+            address_form = AddressForm(request.POST)
+            if address_form.is_valid():
+                address = address_form.save(commit=False)
+                address.user = user.profile.user
+
+                #Clean Address
+                address.address = address_form.cleaned_data.get('address')
+                address.state = address_form.cleaned_data.get('state')
+                address.city = address_form.cleaned_data.get('city')
+                address.zipcodezipcode = address_form.cleaned_data.get('zipcode')
+
+                print(address.address)
+                address.save()
+
             raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
             return redirect('login')
     else:
         user_form = SignUpUserForm()
-    return render(request, 'registration/signup.html', {'user': user_form})
+        profile_form = SignUpProfileForm()
+        address_form = AddressForm()
+    return render(request, 'registration/signup.html',
+              {'user': user_form, 'profile': profile_form,
+               'address': address_form})
+
 
 @login_required
 def profile(request):
