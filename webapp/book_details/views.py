@@ -3,6 +3,7 @@ from django.db.models import Avg
 
 from .models import Book, Review
 from .forms import ReviewForm
+from carts.models import Order
 
 def details(request, book_id):
     book = None
@@ -19,8 +20,11 @@ def details(request, book_id):
             review = Review.objects.get(book=book, user=request.user)
         except Review.DoesNotExist:
             review = Review(book=book, user=request.user)
+
+        purchased = Order.objects.filter(user=request.user, orderItems__book=book).exists()
     else:
         review = None
+        purchased = False
 
     if request.method == 'POST':
         form = ReviewForm(request.POST, instance=review)
@@ -30,4 +34,4 @@ def details(request, book_id):
         form = ReviewForm(instance=review)
 
     return render(request, 'book_details/details.html',
-            {'book': book, 'reviews': reviews, 'form': form})
+            {'book': book, 'reviews': reviews, 'form': form, 'purchased': purchased})
