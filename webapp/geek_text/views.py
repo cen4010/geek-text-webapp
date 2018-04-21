@@ -61,8 +61,8 @@ def signup(request):
     else:
         user_form = SignUpUserForm()
         profile_form = SignUpProfileForm()
-        address_form = AddressForm()
-        creditcard_form = CreditCardForm()
+        address_form = AddressForm(instance=None)
+        creditcard_form = CreditCardForm(instance=None)
 
     return render(request, 'registration/signup.html',
               {'user': user_form, 'profile': profile_form,
