@@ -101,6 +101,18 @@ class UserProfileForm(forms.ModelForm):
             'phone'
         )
 
+class AddressViewForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = ('address', 'state', 'city', 'zipcode')
+        exclude = ('user',)
+
+class CreditCardViewForm(forms.ModelForm):
+    class Meta:
+        model = CreditCard
+        fields = ('card_name', 'card_number', 'card_expirydate', 'card_ccv')
+        exclude = ('user',)
+
 class EditForm(UserChangeForm):
     class Meta:
         model = User

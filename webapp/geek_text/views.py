@@ -4,9 +4,13 @@ from django.db import transaction
 from django.shortcuts import render, redirect
 from .forms import (
     SignUpUserForm, SignUpProfileForm, UserProfileForm, UserViewForm,
-    EditProfileForm, EditForm, AddressForm, CreditCardForm,)
+    EditProfileForm, EditForm, AddressForm, CreditCardForm,
+    AddressViewForm, CreditCardViewForm)
 from django.contrib.auth.forms import PasswordChangeForm
 from django.urls import reverse
+from .models import Address, CreditCard
+from django.forms import modelform_factory
+
 
 def signup(request):
     if request.method == 'POST':
@@ -69,7 +73,21 @@ def signup(request):
 def profile(request):
     user_form = UserViewForm(instance= request.user)
     profile_form = UserProfileForm(instance= request.user.profile)
-    args = {'user': user_form, 'profile': profile_form}
+
+    try:
+        address = Address.objects.get(user=request.user)
+    except Address.DoesNotExist:
+        address = Address(user=request.user)
+    address_form = AddressViewForm(instance=address)
+
+    try:
+        creditcard = CreditCard.objects.get(user=request.user)
+    except CreditCard.DoesNotExist:
+        creditcard = CreditCard(user=request.user)
+    creditcard_form = CreditCardViewForm(instance=creditcard)
+
+    args = {'user': user_form, 'profile': profile_form,
+            'address': address_form, 'creditcard': creditcard_form}
     return render(request, 'accounts/profile.html', args)
 
 
