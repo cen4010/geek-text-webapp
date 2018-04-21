@@ -8,8 +8,8 @@ from .forms import (
     AddressViewForm, CreditCardViewForm)
 from django.contrib.auth.forms import PasswordChangeForm
 from django.urls import reverse
-from .models import Address, CreditCard
-from django.forms import modelform_factory
+from .models import Address, CreditCard, User
+from django.contrib  import messages
 
 
 def signup(request):
@@ -71,7 +71,7 @@ def signup(request):
 
 @login_required
 def profile(request):
-    user_form = UserViewForm(instance= request.user)
+    user_form = UserViewForm(instance=request.user)
     profile_form = UserProfileForm(instance= request.user.profile)
 
     try:
@@ -92,24 +92,40 @@ def profile(request):
 
 
 @login_required
-@transaction.atomic
 def edit_profile(request):
+    try:
+     address = Address.objects.get(user=request.user)
+    except Address.DoesNotExist:
+        address = Address(user=request.user)
+    try:
+        creditcard = CreditCard.objects.get(user=request.user)
+    except CreditCard.DoesNotExist:
+        creditcard = CreditCard(user=request.user)
+
     if request.method == 'POST':
         user_form = EditForm(request.POST, instance=request.user)
         profile_form = EditProfileForm(request.POST, instance=request.user.profile)
+        address_form = AddressViewForm(request.POST, instance=address)
+        creditcard_form = CreditCardViewForm(request.POST, instance=creditcard)
 
-        if user_form.is_valid() or profile_form.is_valid():
+        if user_form.is_valid() or profile_form.is_valid() or address_form.is_valid() or creditcard_form.is_valid():
+
             user_form.save()
             profile_form.save()
-            messages.success(request, _('Your profile was successfully updated!'))
-            return redirect(reverse('view_profile'))
+            address_form.save()
+            creditcard_form.save()
+
+            messages.success(request, ('Your profile was successfully updated!'))
+            return redirect(reverse('profile'))
         else:
             messages.error(request, _('Please correct the error below.'))
     else:
-        user_form = EditForm(request.POST, instance=request.user)
+        user_form = EditForm(instance=request.user)
         profile_form = EditProfileForm(instance=request.user.profile)
-
-        args = {'user': user_form, 'profile': profile_form }
+        address_form = AddressViewForm(instance=address)
+        creditcard_form = CreditCardViewForm(instance=creditcard)
+        args = {'user': user_form, 'profile': profile_form,
+                'address': address_form, 'creditcard': creditcard_form}
         return render(request, 'accounts/edit_profile.html', args)
 
 @login_required

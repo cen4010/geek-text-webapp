@@ -7,6 +7,8 @@
     {% csrf_token %}
     {{ user.as_p }}
     {{ profile.as_p }}
+    {{ address.as_p }}
+    {{ creditcard.as_p }}
     <button type="submit">Save changes</button>
 </form>
 {% endblock %}

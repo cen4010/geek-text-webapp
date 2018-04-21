@@ -113,20 +113,38 @@ class CreditCardViewForm(forms.ModelForm):
         fields = ('card_name', 'card_number', 'card_expirydate', 'card_ccv')
         exclude = ('user',)
 
-class EditForm(UserChangeForm):
+class EditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = (
+            'username',
             'first_name',
             'last_name',
             'email',
-            'password'
         )
+        exclude = ('password',)
 
-class EditProfileForm(UserChangeForm):
+        def clean_password(self):
+            return ""
+
+class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = (
             'birth_date',
-            'phone'
+            'phone',
         )
+        exclude = ('password',)
+
+
+class EditAddressForm(UserChangeForm):
+    class Meta:
+        model = Address
+        fields = ('address', 'state', 'city', 'zipcode')
+        exclude = ('user',)
+
+class EditCreditCardForm(UserChangeForm):
+    class Meta:
+        model = CreditCard
+        fields = ('card_name', 'card_number', 'card_expirydate', 'card_ccv')
+        exclude = ('user',)
