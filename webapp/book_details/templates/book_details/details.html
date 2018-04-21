@@ -9,7 +9,7 @@
 			<h2 class="product-title">{{ book.title }}</h2>
 			<div class="product-author"><i>by</i> <a href="#" data-toggle="modal" data-target="#authorModal">{{ book.author }}</a></div>
 			<div id="authorModal" class="modal fade" role="dialog">
-				<div class="modal-dialog">
+				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -64,38 +64,44 @@
 <div class="container">
 	<div class="wrapper-row">
 		{% if user.is_authenticated %}
-		<form method="post" class="col-md-4">
-			<h3>Leave a Review</h3>
-			{% csrf_token %}
+			{% if purchased %}
+			<form method="post" class="col-md-4">
+				<h3>Leave a Review</h3>
+				{% csrf_token %}
 
-			<div>
-				<div class="row">
-					<div class="form-group col-md-12">
-						<label>Rating</label>
-						{{ form.rating }}
+				<div>
+					<div class="row">
+						<div class="form-group col-md-12">
+							<label>Rating</label>
+							{{ form.rating }}
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group col-md-12">
+							<label>Comment</label>
+							{{ form.comment }}
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group col-md-3">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+
+						<div class="form-check col-md-9" style="float:left">
+							{{ form.anonymous }}
+							<label>Post anonymously?</label>
+						</div>
+
 					</div>
 				</div>
-
-				<div class="row">
-					<div class="form-group col-md-12">
-						<label>Comment</label>
-						{{ form.comment }}
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="form-group col-md-3">
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</div>
-
-					<div class="form-check col-md-9" style="float:left">
-						{{ form.anonymous }}
-						<label>Post anonymously?</label>
-					</div>
-
-				</div>
+			</form>
+			{% else %}
+			<div class="col-md-4">
+				<h4>Purchase book to review!</h4>
 			</div>
-		</form>
+			{% endif %}
 		{% else %}
 		<div class="col-md-4">
 			<h4>Must be logged in to review!</h4>
