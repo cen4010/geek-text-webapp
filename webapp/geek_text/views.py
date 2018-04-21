@@ -71,6 +71,9 @@ def signup(request):
 
 @login_required
 def profile(request):
+    if request.method == 'POST':
+        return redirect(reverse('edit_profile'))
+
     user_form = UserViewForm(instance=request.user)
     profile_form = UserProfileForm(instance= request.user.profile)
 
