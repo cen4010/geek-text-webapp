@@ -33,7 +33,9 @@ SECRET_KEY = 'npualj(-7_a0%4o^cs1_=s+!5i9(7eh$%*c5c!bi9_#5q335!@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'geek-text.shew.io'
+]
 
 
 # Application definition

@@ -2,16 +2,19 @@ version: '3'
 
 services:
   db:
-    image: mysql/mysql-server
+    image: mariadb:10.3.6
+    restart: always
     volumes:
       - dbdata:/var/lib/mysql
     environment:
       - MYSQL_USER=${DB_USER}
       - MYSQL_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_RANDOM_ROOT_PASSWORD=1
 
   web:
     build: .
+    restart: always
     ports:
       - "8000:8000"
     depends_on:
@@ -28,6 +31,17 @@ services:
       - AWS_ACCESS_ID
       - AWS_SECRET_KEY
       - AWS_S3_BUCKET
+      - VIRTUAL_HOST=geek-text.shew.io
+      - LETSENCRPYT_HOST=geek-text.shew.io
+      - LETSENCRPYT_EMAIL=danh@shew.io
+    networks:
+      - proxy-tier
+      - default
 
 volumes:
   dbdata:
+
+networks:
+  proxy-tier:
+    external:
+      name: nginx-proxy
