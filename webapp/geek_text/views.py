@@ -16,7 +16,9 @@ def signup(request):
     if request.method == 'POST':
         user_form = SignUpUserForm(request.POST)
         profile_form = SignUpProfileForm(request.POST)
-
+        address_form = AddressForm(request.POST)
+        creditcard_form = CreditCardForm(request.POST)
+        
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
             user.refresh_from_db()
@@ -29,7 +31,7 @@ def signup(request):
             user.profile.save()
 
 
-            address_form = AddressForm(request.POST)
+
             if address_form.is_valid():
                 address = address_form.save(commit=False)
                 address.user = user.profile.user
@@ -42,7 +44,6 @@ def signup(request):
 
                 address.save()
 
-            creditcard_form = CreditCardForm(request.POST)
             if creditcard_form.is_valid():
                 creditcard = creditcard_form.save(commit=False)
                 creditcard.user = user.profile.user
@@ -146,4 +147,3 @@ def change_password(request):
         form = PasswordChangeForm(user=request.user)
         args = {'form': form}
         return render(request, 'accounts/change_password.html', args)
-
