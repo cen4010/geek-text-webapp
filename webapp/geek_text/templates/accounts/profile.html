@@ -7,8 +7,15 @@
 <div class="container" >
     <h1>{{ user.username }}</h1>
     <form method="POST">
+        {% csrf_token %}
         {{ user.as_p }}
         {{ profile.as_p }}
+        {{ address.as_p }}
+        {{ creditcard.as_p }}
+
+        <div class="container">
+            <input type="submit" value="Edit Profile" action="{% url 'edit_profile' %}" href="{% url 'edit_profile'%}"/>
+        </div>
     </form>
 </div>
 {% endblock %}

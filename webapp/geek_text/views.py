@@ -1,61 +1,135 @@
-from django.contrib.auth import login, authenticate, update_session_auth_hash
+from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import render, redirect
-from .forms import SignUpUserForm, UserProfileForm, UserViewForm, EditProfileForm, EditForm
+from .forms import (
+    SignUpUserForm, SignUpProfileForm, UserProfileForm, UserViewForm,
+    EditProfileForm, EditForm, AddressForm, CreditCardForm,
+    AddressViewForm, CreditCardViewForm)
 from django.contrib.auth.forms import PasswordChangeForm
 from django.urls import reverse
+from .models import Address, CreditCard, User
+from django.contrib  import messages
 
 
 def signup(request):
     if request.method == 'POST':
         user_form = SignUpUserForm(request.POST)
-
-        if user_form.is_valid():
+        profile_form = SignUpProfileForm(request.POST)
+        address_form = AddressForm(request.POST)
+        creditcard_form = CreditCardForm(request.POST)
+        
+        if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
-            user.refresh_from_db()  # load the profile instance created by the signal
+            user.refresh_from_db()
 
-            user.profile.birth_date = user_form.cleaned_data.get('birth_date')
-            user.profile.city = user_form.cleaned_data.get('city')
-            user.profile.phone = user_form.cleaned_data.get('phone')
+            profile = profile_form.save(commit=False)
 
+            #Clean Profile
+            user.profile.birth_date = profile_form.cleaned_data.get('birth_date')
+            user.profile.phone = profile_form.cleaned_data.get('phone')
             user.profile.save()
-            user.save()
+
+
+
+            if address_form.is_valid():
+                address = address_form.save(commit=False)
+                address.user = user.profile.user
+
+                #Clean Address
+                address.address = address_form.cleaned_data.get('address')
+                address.state = address_form.cleaned_data.get('state')
+                address.city = address_form.cleaned_data.get('city')
+                address.zipcodezipcode = address_form.cleaned_data.get('zipcode')
+
+                address.save()
+
+            if creditcard_form.is_valid():
+                creditcard = creditcard_form.save(commit=False)
+                creditcard.user = user.profile.user
+
+                creditcard.card_name = creditcard_form.cleaned_data.get('card_name')
+                creditcard.card_number = creditcard_form.cleaned_data.get('card_number')
+                creditcard.card_expirydate = creditcard_form.cleaned_data.get('card_expirydate')
+                creditcard.card_ccv = creditcard_form.cleaned_data.get('card_ccv')
+
+                creditcard.save()
+
             raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
             return redirect('login')
     else:
         user_form = SignUpUserForm()
-    return render(request, 'registration/signup.html', {'user': user_form})
+        profile_form = SignUpProfileForm()
+        address_form = AddressForm(instance=None)
+        creditcard_form = CreditCardForm(instance=None)
+
+    return render(request, 'registration/signup.html',
+              {'user': user_form, 'profile': profile_form,
+               'address': address_form, 'creditcard': creditcard_form})
+
 
 @login_required
 def profile(request):
-    user_form = UserViewForm(instance= request.user)
+    if request.method == 'POST':
+        return redirect(reverse('edit_profile'))
+
+    user_form = UserViewForm(instance=request.user)
     profile_form = UserProfileForm(instance= request.user.profile)
-    args = {'user': user_form, 'profile': profile_form}
+
+    try:
+        address = Address.objects.get(user=request.user)
+    except Address.DoesNotExist:
+        address = Address(user=request.user)
+    address_form = AddressViewForm(instance=address)
+
+    try:
+        creditcard = CreditCard.objects.get(user=request.user)
+    except CreditCard.DoesNotExist:
+        creditcard = CreditCard(user=request.user)
+    creditcard_form = CreditCardViewForm(instance=creditcard)
+
+    args = {'user': user_form, 'profile': profile_form,
+            'address': address_form, 'creditcard': creditcard_form}
     return render(request, 'accounts/profile.html', args)
 
 
 @login_required
-@transaction.atomic
 def edit_profile(request):
+    try:
+     address = Address.objects.get(user=request.user)
+    except Address.DoesNotExist:
+        address = Address(user=request.user)
+    try:
+        creditcard = CreditCard.objects.get(user=request.user)
+    except CreditCard.DoesNotExist:
+        creditcard = CreditCard(user=request.user)
+
     if request.method == 'POST':
         user_form = EditForm(request.POST, instance=request.user)
         profile_form = EditProfileForm(request.POST, instance=request.user.profile)
+        address_form = AddressViewForm(request.POST, instance=address)
+        creditcard_form = CreditCardViewForm(request.POST, instance=creditcard)
 
-        if user_form.is_valid() or profile_form.is_valid():
+        if user_form.is_valid() or profile_form.is_valid() or address_form.is_valid() or creditcard_form.is_valid():
+
             user_form.save()
             profile_form.save()
-            messages.success(request, _('Your profile was successfully updated!'))
-            return redirect(reverse('view_profile'))
+            address_form.save()
+            creditcard_form.save()
+
+            messages.success(request, ('Your profile was successfully updated!'))
+            return redirect(reverse('profile'))
         else:
             messages.error(request, _('Please correct the error below.'))
     else:
-        user_form = EditForm(request.POST, instance=request.user)
+        user_form = EditForm(instance=request.user)
         profile_form = EditProfileForm(instance=request.user.profile)
-
-        args = {'user': user_form, 'profile': profile_form }
+        address_form = AddressViewForm(instance=address)
+        creditcard_form = CreditCardViewForm(instance=creditcard)
+        args = {'user': user_form, 'profile': profile_form,
+                'address': address_form, 'creditcard': creditcard_form}
         return render(request, 'accounts/edit_profile.html', args)
 
 @login_required
@@ -73,4 +147,3 @@ def change_password(request):
         form = PasswordChangeForm(user=request.user)
         args = {'form': form}
         return render(request, 'accounts/change_password.html', args)
-
