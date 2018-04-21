@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'geek_text',
     'django_filters',
     'localflavor',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
