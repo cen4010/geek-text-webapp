@@ -7,6 +7,7 @@ User = settings.AUTH_USER_MODEL
 
 # cart manager is used to create new carts based on session and user information https://docs.djangoproject.com/en/2.0/topics/db/managers/
 
+
 class CartsManager(models.Manager):
     def new_or_get(self, request):
         cart_id = request.session.get("cart_id", None)
@@ -62,7 +63,12 @@ class CartItem(models.Model):
         return str(self.id)
 
 
-#Tied the cart to the user for persistance for when a user signs in they want to acess their cart.
+
+class SavedItems(models.Model):
+    book = models.ForeignKey(Book)
+
+    def __str__(self):
+        return self.book.title
 
 
 class Cart(models.Model):

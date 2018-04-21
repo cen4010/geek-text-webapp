@@ -1,16 +1,16 @@
-{% extends 'geek_text/base.html' %} {% block content %}
+{% extends 'geek_text/base.html' %} {% block content %} {% load mathfilters %}
+<div class="container" style="font-size: 1.2em">
+  <h1>
+    <span class="glyphicon glyphicon-shopping-cart"></span>Cart
 
-<div class="container">
-  <h1> Cart
-    <span class="glyphicon glyphicon-shopping-cart"></span>
   </h1>
 
   {% if cart.cartItems.exists %}
-  <table class="table">
+  <table class="table" style="margin-top:2%">
     <thead>
       <tr>
         <th>Item #</th>
-        <th>Image Preiview</th>
+        <th>Image Preview</th>
         <th>Book Name</th>
         <th>Book Price</th>
         <th>Quantity</th>
@@ -22,16 +22,22 @@
         <th scope="row">{{ forloop.counter }}
         </th>
         <td>
-          <img src="{{ item.book.cover.url }}" width="75px" />
+          <img src="{{ item.book.cover.url }}" width="60%" />
         </td>
         <td>
-          <a href='/books/{{item.book.id}}'>{{ item.book.title }}</a>
-          <form class='form-product-ajax' method='POST' action='remove/' class="form"> {% csrf_token %}
-            <input type='hidden' name='item_id' value='{{ item.id }}' />
-
-            <button type='submit' class='btn btn-link btn-sm' style="padding:0px;cursor: pointer;">Remove?</button>
-            </span>
-          </form>
+          <div class="row">
+            <a href='/books/{{item.book.id}}'>{{ item.book.title }}</a>
+            <form class='form-product-ajax' method='POST' action='remove/' class="form"> {% csrf_token %}
+              <input type='hidden' name='item_id' value='{{ item.id }}' />
+              <button type='submit' class='btn btn-danger btn-sm' style="padding:5px;margin-top: 5px">Remove</button>
+              </span>
+            </form>
+            <form class='form-product-ajax' method='POST' action='update_save/' class="form"> {% csrf_token %}
+              <input type='hidden' name='item_id' value='{{ item.id }}' />
+              <button type='submit' class='btn btn-success btn-sm' style="padding:5px;margin-top: 5px">Save For Later</button>
+              </span>
+            </form>
+          </div>
         </td>
         <td>${{ item.price }}</td>
 
@@ -46,33 +52,77 @@
             </select>
           </form>
         </td>
-        
+
       </tr>
       {% endfor %}
       <tr>
         <td colspan="4"></td>
         <td>
-          <b>Subtotal</b> ${{ cart.subtotal }}</td>
+          <b>Subtotal: </b> ${{ cart.subtotal }}</td>
       </tr>
       <tr>
         <td colspan="4"></td>
         <td>
-          <b>Total</b> ${{ cart.total }}</td>
+          <b>Sales Tax: </b> ${{ cart.subtotal|mul:.07}}</td>
+      </tr>
+
+      <tr>
+        <td colspan="4"></td>
+        <td>
+          <b>Total:</b> ${{ cart.total }}</td>
       </tr>
       <tr>
         <td colspan="4"></td>
         <td>
-            <form method='GET' action='/cart/checkout/' data-endpoint='/cart/checkout/' class="form"> {% csrf_token %}
-              <button type='submit' class="btn btn-block btn-success" role="button">Checkout</button>
-            </form>
+          <form method='GET' action='/cart/checkout/' data-endpoint='/cart/checkout/' class="form"> {% csrf_token %}
+            <button type='submit' class="btn btn-block btn-success " role="button">Checkout</button>
+          </form>
         </td>
       </tr>
     </tbody>
   </table>
-
   {% else %}
   <h1 class='lead'> Your Cart is Empty</h1>
   {% endif %}
+  {% if Saveditems.exists %}
+  <h1 class="mt-5 mb-3" style="margin-top:5%">
+    <span class="glyphicon glyphicon-bookmark"></span> Saved For Later ({{Saveditems.count}} items)</h1>
+  <div>
+    <table class="table" style="margin-top:2%">
+      <thead>
+        <tr>
+          <th>Image Preview</th>
+          <th>Book Name</th>
+          <th>Book Price</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for item2 in Saveditems.all %}
+          <tr>
+            <td>
+              <img src="{{ item2.book.cover.url }}" width="60%" />
+            </td>
+            <td>
+              <div class="row">
+                <a href='/books/{{item2.book.id}}'>{{ item2.book.title }}</a>
+                <form class='form-product-ajax' method='POST' action='remove_save/' class="form"> {% csrf_token %}
+                  <input type='hidden' name='item_id' value='{{ item2.id }}' />
+                  <button type='submit' class='btn btn-danger btn-sm' style="padding:5px;margin-top: 5px">Remove</button>
+                  </span>
+                </form>
+                <form class='form-product-ajax' method='POST' action='add_back/' class="form"> {% csrf_token %}
+                  <input type='hidden' name='item_id' value='{{ item2.id }}' />
+                  <button type='submit' class='btn btn-success btn-sm' style="padding:5px;margin-top: 5px">Add to Cart</button>
+                  </span>
+                </form>
+              </div>
+            </td>
+            <td>{{ item2.book.price }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
 </div>
-
 {% endblock %}
